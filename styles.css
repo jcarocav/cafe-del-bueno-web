@@ -91,6 +91,11 @@ body {
   background-color: #ffffff;
   color: rgb(59, 35, 20);
   line-height: 1.5;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 #root {
@@ -221,6 +226,27 @@ body {
 .tag-postre  { background: rgb(232, 220, 200); color: rgb(59, 35, 20); }
 .tag-saludable { background: rgb(100, 140, 80); color: white; }
 
+/* Cards de reseñas */
+.review-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Botones sociales del footer */
+.social-btn {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
+}
+.social-btn:hover {
+  background-color: rgb(159, 106, 51);
+  border-color: rgb(159, 106, 51) !important;
+  color: white !important;
+}
+
 /* Cards de Reservar Sala */
 .room-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -241,5 +267,92 @@ footer a:hover {
 
 /* Compensar el header fijo */
 #root > div {
-  padding-top: 5rem; /* 80px = h-20 */
+  padding-top: 4rem; /* 64px = h-16 (mobile) */
+}
+@media (min-width: 768px) {
+  #root > div {
+    padding-top: 5rem; /* 80px = h-20 (desktop) */
+  }
+}
+
+/* ============================================================
+   Navegación móvil
+   ============================================================ */
+.nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+.nav-toggle:hover {
+  background-color: rgba(59, 35, 20, 0.06);
+}
+
+#mobile-nav {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  z-index: 199;
+  background: white;
+  border-bottom: 1px solid rgb(232, 232, 232);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1.25rem 1rem;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+#mobile-nav.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 0;
+  font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 15px;
+  color: rgb(59, 35, 20);
+  text-decoration: none;
+  border-bottom: 1px solid rgb(240, 232, 220);
+}
+.mobile-nav-link:last-child {
+  border-bottom: none;
+}
+
+#mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  top: 4rem;
+  z-index: 198;
+  background: rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+#mobile-nav-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .nav-toggle { display: none; }
+  #mobile-nav, #mobile-nav-overlay { display: none !important; }
+}
+@media (max-width: 767px) {
+  .nav-desktop { display: none; }
+}
+@media (max-width: 380px) {
+  .brand-name { display: none; }
 }

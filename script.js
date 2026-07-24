@@ -409,11 +409,11 @@ function renderCartContent() {
             <p class="text-sm font-medium" style="color: rgb(59,35,20);">${item.name}</p>
             <p class="text-xs mt-0.5" style="color: rgb(159,106,51);">${CURRENCY_SYMBOL}${item.price.toFixed(2)}</p>
             <div class="flex items-center gap-3 mt-2.5">
-              <button class="cart-qty-minus w-6 h-6 border flex items-center justify-center transition-colors" style="border-color: rgb(220,200,175); color: rgb(59,35,20); background: none; cursor: pointer; border-radius: 4px;" data-id="${item.id}">
+              <button class="cart-qty-minus w-8 h-8 border flex items-center justify-center transition-colors" style="border-color: rgb(220,200,175); color: rgb(59,35,20); background: none; cursor: pointer; border-radius: 4px;" data-id="${item.id}">
                 <i data-lucide="minus" class="w-3 h-3"></i>
               </button>
               <span class="text-sm w-4 text-center" style="color: rgb(59,35,20);">${item.qty}</span>
-              <button class="cart-qty-plus w-6 h-6 border flex items-center justify-center transition-colors" style="border-color: rgb(220,200,175); color: rgb(59,35,20); background: none; cursor: pointer; border-radius: 4px;" data-id="${item.id}">
+              <button class="cart-qty-plus w-8 h-8 border flex items-center justify-center transition-colors" style="border-color: rgb(220,200,175); color: rgb(59,35,20); background: none; cursor: pointer; border-radius: 4px;" data-id="${item.id}">
                 <i data-lucide="plus" class="w-3 h-3"></i>
               </button>
               <button class="cart-remove ml-2 transition-colors" style="color: rgb(159,106,51); background: none; border: none; cursor: pointer;" data-id="${item.id}">
@@ -552,24 +552,38 @@ function closeDrawer() {
 function buildMainHTML() {
   // Header fijo
   const headerHtml = `
-    <header role="banner" id="top" class="fixed top-0 left-0 right-0 h-20 bg-white border-b z-[200] flex items-center justify-between px-6" style="border-bottom-color: rgb(232,232,232);">
-      <nav aria-label="Main Navigation" role="navigation" class="flex items-center gap-6">
+    <header role="banner" id="top" class="fixed top-0 left-0 right-0 h-16 md:h-20 bg-white border-b z-[200] flex items-center justify-between px-4 md:px-6" style="border-bottom-color: rgb(232,232,232);">
+      <nav aria-label="Main Navigation" role="navigation" class="nav-desktop flex items-center gap-6">
         <a href="#menu" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Menú</a>
         <a href="#reservar-sala" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Reservar Sala</a>
         <a href="#nosotros" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Nosotros</a>
       </nav>
-      <a href="#top" class="flex items-center gap-2.5" style="text-decoration: none;">
-        <img src="img/logo-navbar.png" alt="Café del Bueno" class="w-11 h-11 rounded-full object-cover" style="border: 1.6px solid rgb(159,106,51);" />
-        <span class="text-xl font-bold" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20);">Café del Bueno</span>
+
+      <button id="nav-toggle-btn" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+        <i data-lucide="menu" size="22" style="color: rgb(59,35,20);"></i>
+      </button>
+
+      <a href="#top" class="flex items-center gap-2 md:gap-2.5" style="text-decoration: none;">
+        <img src="img/logo-navbar.png" alt="Café del Bueno" class="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover" style="border: 1.6px solid rgb(159,106,51);" />
+        <span class="brand-name text-lg md:text-xl font-bold" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20);">Café del Bueno</span>
       </a>
+
       <div class="flex items-center gap-6">
-        <a href="#contacto" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Ubicación</a>
+        <a href="#contacto" class="nav-desktop uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Ubicación</a>
         <button id="navbar-cart-btn" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors" aria-label="Ver mi pedido">
           <i data-lucide="shopping-bag" size="20" style="color: rgb(59,35,20);"></i>
           <span id="navbar-cart-badge" class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center text-[11px] font-bold" style="background-color: rgb(159,106,51); color: white; display: none;">0</span>
         </button>
       </div>
     </header>
+
+    <div id="mobile-nav" role="navigation" aria-label="Menú móvil">
+      <a href="#menu" class="mobile-nav-link">Menú</a>
+      <a href="#reservar-sala" class="mobile-nav-link">Reservar Sala</a>
+      <a href="#nosotros" class="mobile-nav-link">Nosotros</a>
+      <a href="#contacto" class="mobile-nav-link">Ubicación</a>
+    </div>
+    <div id="mobile-nav-overlay"></div>
   `;
 
   const topBarHtml = `
@@ -581,18 +595,18 @@ function buildMainHTML() {
   `;
 
   const heroHtml = `
-    <div class="relative mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[600px]">
+    <div class="relative mb-[60px] md:mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[480px] md:min-h-[600px]">
       <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 68%);"></div>
       <img src="img/fondo.png" alt="Café del Bueno — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
-      <div class="relative pt-20 pr-[30px] pb-20 pl-[30px] z-[2]">
+      <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
         <div class="text-left max-w-[420px]">
-          <h1 class="font-bold text-left uppercase text-[38px] leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Pide del bueno.<br />Conoce el lugar.</h1>
+          <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Pide del bueno.<br />Conoce el lugar.</h1>
           <div class="text-left">
-            <p class="text-left mt-[20px] text-[17px] leading-[26px] max-w-[380px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Café de especialidad, pastelería casera y el rincón de barrio favorito de Punta Arenas.</p>
+            <p class="text-left mt-[16px] md:mt-[20px] text-[15px] md:text-[17px] leading-[24px] md:leading-[26px] max-w-[380px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Café de especialidad, pastelería casera y el rincón de barrio favorito de Punta Arenas.</p>
           </div>
-          <div class="flex items-center gap-4 mt-[24px]">
-            <a href="#menu" class="inline-block text-center uppercase align-middle whitespace-nowrap h-12 bg-[rgb(159,106,51)] tracking-[0.4px] leading-[46px] min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white;">Menú</a>
-            <a href="#reservar-sala" class="inline-block text-center uppercase align-middle whitespace-nowrap h-12 border-[1.6px] border-white text-white tracking-[0.4px] leading-[46px] min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none;">Reservar Sala</a>
+          <div class="flex flex-wrap items-center gap-3 md:gap-4 mt-[20px] md:mt-[24px]">
+            <a href="#menu" class="inline-block text-center uppercase align-middle whitespace-nowrap h-11 md:h-12 bg-[rgb(159,106,51)] tracking-[0.4px] leading-[42px] md:leading-[46px] min-w-[110px] md:min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white;">Menú</a>
+            <a href="#reservar-sala" class="inline-block text-center uppercase align-middle whitespace-nowrap h-11 md:h-12 border-[1.6px] border-white text-white tracking-[0.4px] leading-[38px] md:leading-[46px] min-w-[110px] md:min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none;">Reservar Sala</a>
           </div>
         </div>
       </div>
@@ -629,7 +643,7 @@ function buildMainHTML() {
   `).join('');
 
   const menuHtml = `
-    <section id="menu" style="background-color: rgb(252,248,243);" class="py-20 px-[30px]">
+    <section id="menu" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-12">
           <h2 class="text-center mb-3 text-[32px]" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20); font-weight: 700;">Nuestro Menú</h2>
@@ -684,7 +698,7 @@ function buildMainHTML() {
   }).join('');
 
   const reservarHtml = `
-    <section id="reservar-sala" style="background-color: rgb(40,25,14);" class="py-20 px-[30px]">
+    <section id="reservar-sala" style="background-color: rgb(40,25,14);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-14">
           <p class="uppercase text-[rgb(194,151,106)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Espacios Privados</p>
@@ -697,7 +711,7 @@ function buildMainHTML() {
   `;
 
   const nosotrosHtml = `
-    <section id="nosotros" style="background-color: rgb(252,248,243);" class="py-20 px-[30px]">
+    <section id="nosotros" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div class="order-2 md:order-1">
           <p class="uppercase text-[rgb(159,106,51)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sobre Nosotros</p>
@@ -716,27 +730,61 @@ function buildMainHTML() {
     </section>
   `;
 
+  const reseñasHtml = `
+    <section id="resenas" style="background-color: rgb(240,235,225);" class="py-14 px-5 md:py-20 md:px-[30px]">
+      <div class="ml-auto mr-auto max-w-[1020px]">
+        <div class="text-center mb-3">
+          <p class="uppercase text-[rgb(159,106,51)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Lo Que Dicen Nuestros Clientes</p>
+          <h2 class="text-[rgb(59,35,20)] text-[32px] mb-3" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">Reseñas</h2>
+        </div>
+        <p class="text-center text-[rgb(120,95,75)] text-[13px] italic mb-10 max-w-[520px] mx-auto">Reseñas de ejemplo — así se verán las opiniones reales de TripAdvisor una vez que empecemos a recibirlas.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          ${[
+            { name: 'Cliente de Café del Bueno', text: 'Un café con onda, buena atención y un ambiente que invita a quedarse un rato más.' },
+            { name: 'Visitante de Punta Arenas', text: 'La pastelería casera es espectacular. Se nota que preparan todo con cariño.' },
+            { name: 'Cliente habitual', text: 'El lugar perfecto para trabajar tranquilo o juntarse con amigos. Sin duda volveremos.' },
+          ].map(r => `
+            <div class="review-card bg-white rounded-sm p-6 border border-[rgb(230,220,205)]">
+              <div class="flex gap-0.5 mb-3" style="color: rgb(159,106,51);">
+                ${Array(5).fill('<i data-lucide="star" size="14" fill="currentColor"></i>').join('')}
+              </div>
+              <p class="text-[rgb(80,60,45)] text-[14px] leading-[22px] mb-4">"${r.text}"</p>
+              <p class="text-[rgb(59,35,20)] text-[13px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500;">${r.name}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="text-center">
+          <!-- TODO: reemplazar por el link real al perfil de Café del Bueno en TripAdvisor -->
+          <a href="https://www.tripadvisor.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 uppercase text-[13px] tracking-[0.4px] pb-1 border-b-[1.6px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); border-color: rgb(159,106,51); text-decoration: none;">
+            Ver reseñas en TripAdvisor
+            <i data-lucide="external-link" size="14"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+  `;
+
   const footerHtml = `
     <footer role="contentinfo" id="contacto" class="shrink-0" style="background-color: rgb(40,25,14);">
-      <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-12 pt-20 pr-[30px] pb-14 pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-10 md:gap-y-12 pt-14 pr-5 pb-10 pl-5 md:pt-20 md:pr-[30px] md:pb-14 md:pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
         <div>
           <h3 class="mb-1 text-[28px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700; color: white;">Café del Bueno</h3>
           <p class="uppercase mb-6 text-[11px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
           <div class="flex items-start gap-2 mb-3 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="14" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
-            <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
+            <span>Bories 123<br />Punta Arenas, Chile</span>
           </div>
           <div class="flex items-center gap-2 mb-6 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="mail" size="14" class="shrink-0" style="color: rgb(159,106,51);"></i>
             <a href="mailto:hola@cafedelbueno.cl" class="hover:text-white transition-colors duration-300">hola@cafedelbueno.cl</a>
           </div>
           <div class="flex gap-3">
-            <span class="w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
-              <i data-lucide="instagram" size="14"></i>
-            </span>
-            <span class="w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
-              <i data-lucide="message-circle" size="14"></i>
-            </span>
+            <a href="https://www.instagram.com/cafedelbueno" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.facebook.com/cafedelbueno" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
           </div>
         </div>
         <div>
@@ -785,6 +833,7 @@ function buildMainHTML() {
         ${menuHtml}
         ${reservarHtml}
         ${nosotrosHtml}
+        ${reseñasHtml}
       </main>
       ${footerHtml}
       ${floatingHtml}
@@ -855,6 +904,35 @@ function init() {
   document.getElementById('navbar-cart-btn')?.addEventListener('click', function(e) {
     e.preventDefault();
     openDrawer();
+  });
+
+  // ========== MENÚ MÓVIL (HAMBURGUESA) ==========
+  const navToggleBtn = document.getElementById('nav-toggle-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+  function openMobileNav() {
+    mobileNav?.classList.add('open');
+    mobileNavOverlay?.classList.add('open');
+    navToggleBtn?.setAttribute('aria-expanded', 'true');
+  }
+  function closeMobileNav() {
+    mobileNav?.classList.remove('open');
+    mobileNavOverlay?.classList.remove('open');
+    navToggleBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  navToggleBtn?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (mobileNav?.classList.contains('open')) {
+      closeMobileNav();
+    } else {
+      openMobileNav();
+    }
+  });
+  mobileNavOverlay?.addEventListener('click', closeMobileNav);
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileNav);
   });
 
   // ========== EVENTOS GLOBALES PARA EL DRAWER ==========
@@ -942,10 +1020,13 @@ function init() {
     updateBadge();
   });
 
-  // ========== CERRAR DRAWER CON ESCAPE ==========
+  // ========== CERRAR DRAWER Y MENÚ MÓVIL CON ESCAPE ==========
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && isCartOpen) {
       closeDrawer();
+    }
+    if (e.key === 'Escape') {
+      closeMobileNav();
     }
   });
 
@@ -963,7 +1044,7 @@ function renderMenuPanel(tabId) {
   if (panel.children.length > 0) return;
 
   const items = menuData[tabId] || [];
-  let html = `<div class="grid grid-cols-1 gap-4" style="grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));">`;
+  let html = `<div class="grid grid-cols-1 gap-4" style="grid-template-columns: repeat(auto-fill, minmax(min(440px, 100%), 1fr));">`;
   items.forEach(item => {
     const tagClass = item.tag ? tagClassMap[item.tag] || '' : '';
     const tagHtml = item.tag ? `<span class="tag ${tagClass} shrink-0" style="display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.125rem 0.5rem; border-radius: 2px; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: ${tagClass.includes('favorito') ? 'rgb(159,106,51)' : tagClass.includes('chef') ? 'rgb(59,35,20)' : tagClass.includes('especial') ? 'rgb(194,151,106)' : tagClass.includes('postre') ? 'rgb(232,220,200)' : 'rgb(100,140,80)'}; color: ${tagClass.includes('especial') ? 'rgb(59,35,20)' : tagClass.includes('postre') ? 'rgb(59,35,20)' : 'white'};">${item.tag}</span>` : '';
