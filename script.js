@@ -1,7 +1,7 @@
 // ============================================================
 // CONFIGURACIÓN
 // ============================================================
-const WHATSAPP_NUMBER = "56999999999";
+const WHATSAPP_NUMBER = "56961348234";
 const CAFE_NAME = "Café del Bueno";
 const CURRENCY_SYMBOL = "$";
 
@@ -772,17 +772,17 @@ function buildMainHTML() {
           <p class="uppercase mb-6 text-[11px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
           <div class="flex items-start gap-2 mb-3 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="14" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
-            <span>Bories 123<br />Punta Arenas, Chile</span>
+            <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
           </div>
           <div class="flex items-center gap-2 mb-6 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="mail" size="14" class="shrink-0" style="color: rgb(159,106,51);"></i>
             <a href="mailto:hola@cafedelbueno.cl" class="hover:text-white transition-colors duration-300">hola@cafedelbueno.cl</a>
           </div>
           <div class="flex gap-3">
-            <a href="https://www.instagram.com/cafedelbueno" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+            <a href="https://www.instagram.com/cafedelbueno.cl" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
-            <a href="https://www.facebook.com/cafedelbueno" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+            <a href="https://www.facebook.com/p/Café-Del-Bueno-61581862460295/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Café del Bueno" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
             </a>
           </div>
@@ -803,7 +803,7 @@ function buildMainHTML() {
         <div>
           <p class="uppercase mb-6 text-[11px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
           <p class="mb-5 text-[14px] leading-[22px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
-          <a href="tel:+56999999999" class="block mb-2 text-[14px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 9999 9999</a>
+          <a href="tel:+56961348234" class="block mb-2 text-[14px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 9999 9999</a>
           <a href="mailto:pedidos@cafedelbueno.cl" class="text-[14px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">pedidos@cafedelbueno.cl</a>
         </div>
       </div>
