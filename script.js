@@ -35,6 +35,24 @@ function buildRoomAvailabilityLink(roomName) {
   return buildWhatsAppLink(`¡Hola! Me gustaría saber la disponibilidad para reservar la ${roomName}.`);
 }
 
+// Elige un ícono de Lucide relevante según el nombre/descripción del producto
+function getMenuItemIcon(item) {
+  const t = `${item.name} ${item.description}`.toLowerCase();
+  if (t.includes('matcha') || t.includes('té') || t.includes('te verde')) return 'leaf';
+  if (t.includes('granola') || t.includes('açaí') || t.includes('acai') || t.includes('bowl')) return 'leaf';
+  if (
+    t.includes('cold brew') || t.includes('frappuccino') || t.includes('smoothie') ||
+    t.includes('limonada') || t.includes('helado') || t.includes('iced')
+  ) return 'cup-soda';
+  if (t.includes('tostada') || t.includes('huevo') || t.includes('bagel') || t.includes('croissant de jamón')) return 'egg';
+  if (
+    t.includes('brownie') || t.includes('cheesecake') || t.includes('tiramisú') ||
+    t.includes('tarta') || t.includes('muffin') || t.includes('macaron')
+  ) return 'cake';
+  if (t.includes('café') || t.includes('espresso') || t.includes('latte') || t.includes('cappuccino') || t.includes('cortado') || t.includes('americano') || t.includes('mocha') || t.includes('flat white')) return 'coffee';
+  return 'utensils';
+}
+
 function buildOrderMessage(items, total, info) {
   const lines = [];
   lines.push(`¡Hola ${CAFE_NAME}! 👋 Quiero hacer el siguiente pedido:`);
@@ -538,8 +556,12 @@ function buildMainHTML() {
       <nav aria-label="Main Navigation" role="navigation" class="flex items-center gap-6">
         <a href="#menu" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Menú</a>
         <a href="#reservar-sala" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Reservar Sala</a>
+        <a href="#nosotros" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Nosotros</a>
       </nav>
-      <a href="#top" class="text-xl font-bold" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20); text-decoration: none;">Café del Bueno</a>
+      <a href="#top" class="flex items-center gap-2.5" style="text-decoration: none;">
+        <img src="img/logo-navbar.png" alt="Café del Bueno" class="w-11 h-11 rounded-full object-cover" style="border: 1.6px solid rgb(159,106,51);" />
+        <span class="text-xl font-bold" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20);">Café del Bueno</span>
+      </a>
       <div class="flex items-center gap-6">
         <a href="#contacto" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Ubicación</a>
         <button id="navbar-cart-btn" class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors" aria-label="Ver mi pedido">
@@ -551,7 +573,7 @@ function buildMainHTML() {
   `;
 
   const topBarHtml = `
-    <div class="bg-[rgb(40,25,14)] z-[99] pt-20">
+    <div class="bg-[rgb(40,25,14)] z-[99]">
       <div class="ml-auto mr-auto text-center text-white max-w-[1020px] py-2 px-[30px]">
         <p class="text-center text-[14px] leading-[21px]">☕ Cafetería de barrio en Punta Arenas — pedidos para retiro o coordinados directo por WhatsApp.</p>
       </div>
@@ -560,13 +582,13 @@ function buildMainHTML() {
 
   const heroHtml = `
     <div class="relative mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[600px]">
-      <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2));"></div>
+      <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 68%);"></div>
       <img src="img/fondo.png" alt="Café del Bueno — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
-      <div class="ml-auto mr-auto relative text-left max-w-[1200px] pt-20 pr-[30px] pb-20 pl-[30px] z-[2]">
-        <div class="ml-auto mr-auto text-left max-w-[940px]">
-          <h1 class="font-bold text-left uppercase text-[50px] leading-[50px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Café del Bueno</h1>
+      <div class="relative pt-20 pr-[30px] pb-20 pl-[30px] z-[2]">
+        <div class="text-left max-w-[420px]">
+          <h1 class="font-bold text-left uppercase text-[38px] leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Pide del bueno.<br />Conoce el lugar.</h1>
           <div class="text-left">
-            <p class="text-left mt-[35px] text-[24px] leading-[30px] max-w-[520px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Cafetería de barrio en Punta Arenas — café de especialidad, pastelería casera y buena mesa.</p>
+            <p class="text-left mt-[20px] text-[17px] leading-[26px] max-w-[380px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Café de especialidad, pastelería casera y el rincón de barrio favorito de Punta Arenas.</p>
           </div>
           <div class="flex items-center gap-4 mt-[24px]">
             <a href="#menu" class="inline-block text-center uppercase align-middle whitespace-nowrap h-12 bg-[rgb(159,106,51)] tracking-[0.4px] leading-[46px] min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white;">Menú</a>
@@ -625,32 +647,32 @@ function buildMainHTML() {
   let roomsHtml = rooms.map(room => {
     const iconName = room.icon;
     return `
-      <div class="text-left rounded-sm overflow-hidden border-[1.6px]" style="border-color: rgba(194,151,106,0.25); background: rgba(255,255,255,0.02);">
+      <div class="room-card text-left rounded-sm overflow-hidden border-[1.6px]" style="border-color: rgba(194,151,106,0.25); background: rgba(255,255,255,0.03);">
         <div class="relative h-52 overflow-hidden">
           <img src="${room.image}" alt="${room.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(40,25,14,0.85) 0%, rgba(40,25,14,0.2) 60%);"></div>
           <div class="absolute bottom-0 left-0 right-0 p-5">
             <div class="flex items-center gap-2 mb-1">
               <i data-lucide="${iconName}" size="16" style="color: ${room.accent}; stroke-width: 1.5;"></i>
-              <span class="text-[rgb(194,151,106)] text-[12px] uppercase tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">${room.tagline}</span>
+              <span class="text-[rgb(230,210,180)] text-[12px] uppercase tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">${room.tagline}</span>
             </div>
             <h3 class="text-white text-[24px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${room.name}</h3>
           </div>
         </div>
         <div class="p-5">
-          <p class="text-[rgb(194,151,106)] text-[14px] leading-[22px] mb-4">${room.description}</p>
+          <p class="text-[rgb(228,214,196)] text-[14px] leading-[22px] mb-4">${room.description}</p>
           <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-2 text-[rgb(220,200,170)] text-[13px]">
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[13px]">
               <i data-lucide="users" size="13" stroke-width="1.5"></i>
               <span>${room.capacity}</span>
             </div>
-            <div class="flex items-center gap-2 text-[rgb(220,200,170)] text-[13px]">
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[13px]">
               <i data-lucide="clock" size="13" stroke-width="1.5"></i>
               <span>${room.hours}</span>
             </div>
           </div>
           <ul class="flex flex-wrap gap-2 mb-5">
-            ${room.features.map(f => `<li class="text-[11px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.12); color: rgb(194,151,106); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
+            ${room.features.map(f => `<li class="text-[11px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.22); color: rgb(248,240,228); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
           </ul>
           <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full h-11 uppercase tracking-[0.4px] text-white text-[14px] transition-opacity hover:opacity-90" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; border-radius: 4px;">
             <i data-lucide="message-circle" size="16"></i>
@@ -674,6 +696,26 @@ function buildMainHTML() {
     </section>
   `;
 
+  const nosotrosHtml = `
+    <section id="nosotros" style="background-color: rgb(252,248,243);" class="py-20 px-[30px]">
+      <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <p class="uppercase text-[rgb(159,106,51)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sobre Nosotros</p>
+          <h2 class="text-[rgb(59,35,20)] text-[32px] mb-5" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">Un café que se siente como en casa</h2>
+          <p class="text-[rgb(90,65,45)] text-[15px] leading-[26px] mb-4">Nacimos en Punta Arenas con una idea simple: hacer del café de todos los días algo que realmente valga la pena. Elegimos cada grano, horneamos cada mañana y armamos un espacio donde el viento y el frío de afuera se quedan en la puerta.</p>
+          <p class="text-[rgb(90,65,45)] text-[15px] leading-[26px] mb-6">Somos el lugar de barrio donde te conocen por tu nombre — aunque nos vamos a aprender tu pedido también. Ven a leer, a trabajar o simplemente a quedarte un rato.</p>
+          <a href="#contacto" class="inline-flex items-center gap-2 uppercase text-[13px] tracking-[0.4px] pb-1 border-b-[1.6px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); border-color: rgb(159,106,51); text-decoration: none;">
+            Visítanos
+            <i data-lucide="arrow-right" size="14"></i>
+          </a>
+        </div>
+        <div class="order-1 md:order-2 relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
+          <img src="img/background.png" alt="Interior de Café del Bueno" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </section>
+  `;
+
   const footerHtml = `
     <footer role="contentinfo" id="contacto" class="shrink-0" style="background-color: rgb(40,25,14);">
       <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-12 pt-20 pr-[30px] pb-14 pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
@@ -682,7 +724,7 @@ function buildMainHTML() {
           <p class="uppercase mb-6 text-[11px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
           <div class="flex items-start gap-2 mb-3 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="14" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
-            <span>Bories 123<br />Punta Arenas, Chile</span>
+            <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
           </div>
           <div class="flex items-center gap-2 mb-6 text-[14px]" style="color: rgb(194,151,106);">
             <i data-lucide="mail" size="14" class="shrink-0" style="color: rgb(159,106,51);"></i>
@@ -742,6 +784,7 @@ function buildMainHTML() {
         ${heroHtml}
         ${menuHtml}
         ${reservarHtml}
+        ${nosotrosHtml}
       </main>
       ${footerHtml}
       ${floatingHtml}
@@ -925,14 +968,20 @@ function renderMenuPanel(tabId) {
     const tagClass = item.tag ? tagClassMap[item.tag] || '' : '';
     const tagHtml = item.tag ? `<span class="tag ${tagClass} shrink-0" style="display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.125rem 0.5rem; border-radius: 2px; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: ${tagClass.includes('favorito') ? 'rgb(159,106,51)' : tagClass.includes('chef') ? 'rgb(59,35,20)' : tagClass.includes('especial') ? 'rgb(194,151,106)' : tagClass.includes('postre') ? 'rgb(232,220,200)' : 'rgb(100,140,80)'}; color: ${tagClass.includes('especial') ? 'rgb(59,35,20)' : tagClass.includes('postre') ? 'rgb(59,35,20)' : 'white'};">${item.tag}</span>` : '';
     const id = slugify(`menu-${item.name}`);
+    const iconName = getMenuItemIcon(item);
     html += `
       <div class="flex items-start justify-between gap-4 bg-white rounded-sm p-5 shadow-sm border border-[rgb(235,220,200)] hover:shadow-md transition-shadow duration-200">
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <h3 class="text-[rgb(59,35,20)] text-[18px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${item.name}</h3>
-            ${tagHtml}
+        <div class="flex items-start gap-3 flex-1 min-w-0">
+          <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: rgb(159,106,51);">
+            <i data-lucide="${iconName}" size="18" style="color: white;"></i>
+          </span>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="text-[rgb(59,35,20)] text-[18px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${item.name}</h3>
+              ${tagHtml}
+            </div>
+            <p class="text-[rgb(140,100,60)] text-[14px] leading-[22px]">${item.description}</p>
           </div>
-          <p class="text-[rgb(140,100,60)] text-[14px] leading-[22px]">${item.description}</p>
         </div>
         <div class="flex flex-col items-end gap-2 shrink-0">
           <span class="text-[rgb(159,106,51)] text-[18px] mt-0.5" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${item.price}</span>
