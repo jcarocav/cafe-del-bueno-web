@@ -803,7 +803,7 @@ function buildMainHTML() {
         <div>
           <p class="uppercase mb-6 text-[11px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
           <p class="mb-5 text-[14px] leading-[22px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
-          <a href="tel:+56961348234" class="block mb-2 text-[14px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 9999 9999</a>
+          <a href="tel:+56961348234" class="block mb-2 text-[14px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
           <a href="mailto:pedidos@cafedelbueno.cl" class="text-[14px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">pedidos@cafedelbueno.cl</a>
         </div>
       </div>
