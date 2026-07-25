@@ -106,47 +106,6 @@ html {
    Componentes personalizados
    ============================================================ */
 
-/* Drawer (carrito) */
-.cart-drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 300;
-  display: flex;
-  justify-content: flex-end;
-  pointer-events: none; /* para que el overlay no bloquee clics si está oculto */
-}
-.cart-drawer.open {
-  pointer-events: auto;
-}
-.cart-drawer .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-}
-.cart-drawer.open .overlay {
-  opacity: 1;
-  pointer-events: auto;
-}
-.cart-drawer .panel {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  height: 100%;
-  background-color: rgb(252, 248, 243);
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  display: flex;
-  flex-direction: column;
-  pointer-events: none;
-}
-.cart-drawer.open .panel {
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
 /* Pestañas del menú */
 .menu-tabs {
   display: flex;
@@ -182,49 +141,6 @@ html {
 .menu-panel.active {
   display: block;
 }
-
-/* Botones de método de entrega (toggle) */
-.method-toggle-group {
-  display: flex;
-  gap: 0;
-  border: 1px solid rgb(220, 200, 175);
-  width: fit-content;
-}
-.method-toggle {
-  padding: 0.625rem 1.25rem;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: transparent;
-  color: rgb(140, 100, 60);
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.method-toggle:not(:first-child) {
-  border-left: 1px solid rgb(220, 200, 175);
-}
-.method-toggle.active {
-  background: rgb(59, 35, 20);
-  color: white;
-}
-
-/* Etiquetas de tags en menú */
-.tag {
-  display: inline-block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.125rem 0.5rem;
-  border-radius: 2px;
-  font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-.tag-favorito { background: rgb(159, 106, 51); color: white; }
-.tag-chef    { background: rgb(59, 35, 20); color: white; }
-.tag-especial { background: rgb(194, 151, 106); color: rgb(59, 35, 20); }
-.tag-postre  { background: rgb(232, 220, 200); color: rgb(59, 35, 20); }
-.tag-saludable { background: rgb(100, 140, 80); color: white; }
 
 /* Cards de reseñas */
 .review-card {
