@@ -19,23 +19,9 @@ function buildRoomAvailabilityLink(roomName) {
   return buildWhatsAppLink(`¡Hola! Me gustaría saber la disponibilidad para reservar la ${roomName}.`);
 }
 
-// Elige un ícono de Lucide relevante según el nombre/descripción del producto
-function getMenuItemIcon(item) {
-  const t = `${item.name} ${item.description || ''}`.toLowerCase();
-  if (t.includes('chai') || t.includes('té') || t.includes('infusion')) return 'leaf';
-  if (t.includes('plátano') || t.includes('platano') || t.includes('amor del bueno')) return 'cup-soda';
-  if (t.includes('agua mineral') || t.includes('bebidas') || t.includes('jugo') || t.includes('pulpa')) return 'cup-soda';
-  if (t.includes('syrup') || t.includes('leche vegetal') || t.includes('leche sin lactosa')) return 'droplet';
-  if (t.includes('tostada') || t.includes('tapadito') || t.includes('palta')) return 'sandwich';
-  if (
-    t.includes('torta') || t.includes('kuchen') || t.includes('pie') || t.includes('medialuna') ||
-    t.includes('rollito') || t.includes('galleta')
-  ) return 'cake';
-  return 'coffee';
-}
-
 // ============================================================
-// DATOS DEL MENÚ — Página 1 y Página 2 (carta real del local)
+// DATOS DEL MENÚ — carta real del local (referencia interna con precios,
+// ya no se muestra en la web; se usa el PDF + fotos destacadas en su lugar)
 // ============================================================
 const menuPages = {
   pagina1: {
@@ -121,19 +107,34 @@ const menuPages = {
 };
 
 // ============================================================
+// MENÚ EN LA WEB — solo fotos + nombre, sin precios (el detalle
+// completo con precios va en el PDF descargable)
+// ============================================================
+const MENU_PDF_URL = 'menu-cafe-del-bueno.pdf'; // TODO: reemplazar por el archivo/link real del menú en PDF
+
+const menuHighlights = [
+  { name: 'Latte Pistacho', image: 'img/menu-latte-pistacho.jpg' },
+  { name: 'Cappuccino', image: 'img/menu-cappuccino.jpg' },
+  { name: 'Affogato', image: 'img/menu-affogato.jpg' },
+  { name: 'Amor del Bueno', image: 'img/menu-amor-del-bueno.jpg' },
+  { name: 'Tortas "Del Bueno"', image: 'img/menu-tortas.jpg' },
+  { name: 'Tapaditos', image: 'img/menu-tapaditos.jpg' },
+]; // TODO: reemplazar cada "image" por la foto real de la preparación
+
+// ============================================================
 // DATOS DE SALAS
 // ============================================================
 const rooms = [
   {
     id: 'eventos',
-    name: 'Salas Multi Eventos',
+    name: 'Sala de Reuniones y Sala de Ensayo',
     tagline: 'Tu espacio, tus ideas',
     description: 'Contamos con 2 salas versátiles para reuniones, talleres, presentaciones, lanzamientos o celebraciones privadas. Perfecta para cada ocasión.',
     icon: 'users',
     capacity: 'Hasta 30 personas',
     hours: 'Disponible con reservación previa',
     features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80',
+    image: 'img/sala-reuniones.jpg', // TODO: reemplazar por la foto real que mande la dueña
     accent: 'rgb(59,35,14)',
   }
 ];
@@ -144,20 +145,20 @@ const rooms = [
 function buildMainHTML() {
   // Header fijo
   const headerHtml = `
-    <header role="banner" id="top" class="fixed top-0 left-0 right-0 h-16 md:h-20 bg-white border-b z-[200] flex items-center justify-between px-4 md:px-6" style="border-bottom-color: rgb(232,232,232);">
+    <header role="banner" id="top" class="fixed top-0 left-0 right-0 h-20 bg-white border-b z-[200] flex items-center justify-between px-4 md:px-6" style="border-bottom-color: rgb(232,232,232);">
       <nav aria-label="Main Navigation" role="navigation" class="nav-desktop flex items-center gap-6">
         <a href="#menu" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Menú</a>
         <a href="#reservar-sala" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Reservar Sala</a>
         <a href="#nosotros" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Nosotros</a>
+        <a href="#sala-lectura" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Sala de Lectura</a>
       </nav>
 
       <button id="nav-toggle-btn" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
         <i data-lucide="menu" size="22" style="color: rgb(59,35,20);"></i>
       </button>
 
-      <a href="#top" class="flex items-center gap-2 md:gap-2.5" style="text-decoration: none;">
-        <img src="img/logo-navbar.png" alt="CAFÉ DEL BUENO" class="w-9 h-9 md:w-11 md:h-11 rounded-full object-cover" style="border: 1.6px solid rgb(159,106,51);" />
-        <span class="brand-name text-lg md:text-xl font-bold" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20);">CAFÉ DEL BUENO</span>
+      <a href="#top" class="flex items-center gap-2 md:gap-2.5" style="text-decoration: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <img src="img/logo.svg" alt="CAFÉ DEL BUENO" class="navbar-logo object-contain" />
       </a>
 
       <div class="flex items-center gap-6">
@@ -169,6 +170,7 @@ function buildMainHTML() {
       <a href="#menu" class="mobile-nav-link">Menú</a>
       <a href="#reservar-sala" class="mobile-nav-link">Reservar Sala</a>
       <a href="#nosotros" class="mobile-nav-link">Nosotros</a>
+      <a href="#sala-lectura" class="mobile-nav-link">Sala de Lectura</a>
       <a href="#contacto" class="mobile-nav-link">Ubicación</a>
     </div>
     <div id="mobile-nav-overlay"></div>
@@ -177,7 +179,7 @@ function buildMainHTML() {
   const topBarHtml = `
     <div class="bg-[rgb(40,25,14)] z-[99]">
       <div class="ml-auto mr-auto text-center text-white max-w-[1020px] py-2 px-[30px]">
-        <p class="text-center text-[14px] leading-[21px]">☕ Primera cafetería en el Barrio Prat de Punta Arenas — consultas y pedidos directo por WhatsApp.</p>
+        <p class="text-center text-[16px] md:text-[17px] leading-[24px]">☕ Primera cafetería en el Barrio Prat de Punta Arenas.</p>
       </div>
     </div>
   `;
@@ -187,10 +189,10 @@ function buildMainHTML() {
       <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 68%);"></div>
       <img src="img/fondo.png" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
       <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
-        <div class="text-left max-w-[420px]">
-          <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Pide del bueno.<br />Conoce el lugar.</h1>
+        <div class="text-left max-w-[460px]">
+          <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">El arte del café,<br />servido con calidez.</h1>
           <div class="text-left">
-            <p class="text-left mt-[16px] md:mt-[20px] text-[15px] md:text-[17px] leading-[24px] md:leading-[26px] max-w-[380px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">Café de especialidad, pastelería casera y el rincón de barrio favorito de Punta Arenas.</p>
+            <p class="text-left mt-[16px] md:mt-[20px] text-[15px] md:text-[17px] leading-[24px] md:leading-[26px] max-w-[420px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">En Café del Bueno creemos que un buen café tiene el poder de transformar un momento cotidiano en una experiencia memorable. Te invitamos a disfrutar de café de especialidad, sabores cuidadosamente seleccionados y un ambiente pensado para hacerte sentir como en casa. Bienvenido a tu nuevo lugar favorito.</p>
           </div>
           <div class="flex flex-wrap items-center gap-3 md:gap-4 mt-[20px] md:mt-[24px]">
             <a href="#menu" class="inline-block text-center uppercase align-middle whitespace-nowrap h-11 md:h-12 bg-[rgb(159,106,51)] tracking-[0.4px] leading-[42px] md:leading-[46px] min-w-[110px] md:min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white;">Menú</a>
@@ -201,47 +203,32 @@ function buildMainHTML() {
     </div>
   `;
 
-  // ===== PESTAÑAS DE PÁGINA DEL MENÚ =====
-  const pageIds = Object.keys(menuPages);
-  const tabsHtml = pageIds.map(pageId => `
-    <button class="menu-tab ${pageId === pageIds[0] ? 'active' : ''}"
-            data-tab="${pageId}"
-            style="
-              font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-              font-size: 15px;
-              letter-spacing: 0.5px;
-              text-transform: uppercase;
-              padding: 10px 28px;
-              border: none;
-              border-radius: 50px;
-              background-color: ${pageId === pageIds[0] ? 'rgb(59,35,20)' : '#f0ebe6'};
-              color: ${pageId === pageIds[0] ? 'white' : 'rgb(80, 60, 45)'};
-              cursor: pointer;
-              transition: all 0.2s ease;
-              font-weight: 500;
-              box-shadow: ${pageId === pageIds[0] ? '0 4px 8px rgba(59,35,20,0.3)' : '0 1px 3px rgba(0,0,0,0.05)'};
-            "
-            onmouseover="if(!this.classList.contains('active')){this.style.backgroundColor='#e5ddd6';}"
-            onmouseout="if(!this.classList.contains('active')){this.style.backgroundColor='#f0ebe6';}"
-    >${menuPages[pageId].label}</button>
-  `).join('');
-
-  // Paneles: solo el primero tiene clase 'active' al inicio
-  let panelsHtml = pageIds.map(pageId => `
-    <div id="menu-panel-${pageId}" class="menu-panel ${pageId === pageIds[0] ? 'active' : ''}" style="display: ${pageId === pageIds[0] ? 'block' : 'none'};"></div>
+  // ===== MENÚ: link a PDF + fotos destacadas (sin precios) =====
+  const menuHighlightsHtml = menuHighlights.map(item => `
+    <div class="text-center">
+      <div class="rounded-sm overflow-hidden mb-3" style="aspect-ratio: 1 / 1;">
+        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" />
+      </div>
+      <h4 class="text-[rgb(59,35,20)] text-[16px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${item.name}</h4>
+    </div>
   `).join('');
 
   const menuHtml = `
     <section id="menu" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px]">
+        <div class="text-center mb-8">
+          <h2 class="text-center mb-3 text-[36px] md:text-[40px]" style="font-family: 'Cormorant Garamond', georgia, serif; color: rgb(59,35,20); font-weight: 700;">Nuestro Menú</h2>
+          <p class="text-center text-[rgb(120,80,40)] text-[17px] max-w-[520px] mx-auto leading-[28px]">Ingredientes seleccionados, preparaciones artesanales y el mejor café de origen único para cada momento del día.</p>
+        </div>
         <div class="text-center mb-12">
-          <h2 class="text-center mb-3 text-[32px]" style="font-family: 'Fraunces', georgia, serif; color: rgb(59,35,20); font-weight: 700;">Nuestro Menú</h2>
-          <p class="text-center text-[rgb(120,80,40)] max-w-[480px] mx-auto leading-[26px]">Ingredientes seleccionados, preparaciones artesanales y el mejor café de origen único para cada momento del día.</p>
+          <a href="${MENU_PDF_URL}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 uppercase text-white text-[14px] tracking-[0.4px] h-12 pt-[1.6px] pr-6 pb-0 pl-6" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: rgb(159,106,51); text-decoration: none;">
+            <i data-lucide="download" size="16"></i>
+            Descargar Menú Completo (PDF)
+          </a>
         </div>
-        <div class="menu-tabs" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 30px;">
-          ${tabsHtml}
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8">
+          ${menuHighlightsHtml}
         </div>
-        <div class="menu-panels">${panelsHtml}</div>
       </div>
     </section>
   `;
@@ -259,25 +246,25 @@ function buildMainHTML() {
               <i data-lucide="${iconName}" size="16" style="color: ${room.accent}; stroke-width: 1.5;"></i>
               <span class="text-[rgb(230,210,180)] text-[12px] uppercase tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">${room.tagline}</span>
             </div>
-            <h3 class="text-white text-[24px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${room.name}</h3>
+            <h3 class="text-white text-[24px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${room.name}</h3>
           </div>
         </div>
         <div class="p-5">
-          <p class="text-[rgb(228,214,196)] text-[14px] leading-[22px] mb-4">${room.description}</p>
+          <p class="text-[rgb(228,214,196)] text-[16px] leading-[24px] mb-4">${room.description}</p>
           <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[13px]">
-              <i data-lucide="users" size="13" stroke-width="1.5"></i>
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[15px]">
+              <i data-lucide="users" size="15" stroke-width="1.5"></i>
               <span>${room.capacity}</span>
             </div>
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[13px]">
-              <i data-lucide="clock" size="13" stroke-width="1.5"></i>
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[15px]">
+              <i data-lucide="clock" size="15" stroke-width="1.5"></i>
               <span>${room.hours}</span>
             </div>
           </div>
           <ul class="flex flex-wrap gap-2 mb-5">
-            ${room.features.map(f => `<li class="text-[11px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.22); color: rgb(248,240,228); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
+            ${room.features.map(f => `<li class="text-[13px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.22); color: rgb(248,240,228); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
           </ul>
-          <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full h-11 uppercase tracking-[0.4px] text-white text-[14px] transition-opacity hover:opacity-90" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none;">
+          <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full h-11 uppercase tracking-[0.4px] text-white text-[15px] transition-opacity hover:opacity-90" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none;">
             <i data-lucide="message-circle" size="16"></i>
             Consultar disponibilidad
           </a>
@@ -292,8 +279,8 @@ function buildMainHTML() {
       <div class="relative z-[1] ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-14">
           <p class="uppercase text-[rgb(194,151,106)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Espacio Privado</p>
-          <h2 class="text-white text-[36px] mb-4" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">Reservar una Sala</h2>
-          <p class="text-[rgb(194,151,106)] max-w-[500px] mx-auto leading-[26px] text-[15px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
+          <h2 class="text-white text-[36px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Reservar una Sala</h2>
+          <p class="text-[rgb(194,151,106)] max-w-[540px] mx-auto leading-[28px] text-[17px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
         </div>
         <div class="grid grid-cols-1 max-w-[440px] mx-auto">
           ${roomsHtml}
@@ -306,17 +293,35 @@ function buildMainHTML() {
     <section id="nosotros" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div class="order-2 md:order-1">
-          <p class="uppercase text-[rgb(159,106,51)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sobre Nosotros</p>
-          <h2 class="text-[rgb(59,35,20)] text-[32px] mb-5" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">Un café que se siente como en casa</h2>
-          <p class="text-[rgb(90,65,45)] text-[15px] leading-[26px] mb-4">Nacimos en Punta Arenas con una idea simple: hacer del café de todos los días algo que realmente valga la pena. Elegimos cada grano, horneamos cada mañana y armamos un espacio donde el viento y el frío de afuera se quedan en la puerta.</p>
-          <p class="text-[rgb(90,65,45)] text-[15px] leading-[26px] mb-6">Somos el lugar de barrio donde te conocen por tu nombre — aunque nos vamos a aprender tu pedido también. Ven a leer, a trabajar o simplemente a quedarte un rato.</p>
-          <a href="#contacto" class="inline-flex items-center gap-2 uppercase text-[13px] tracking-[0.4px] pb-1 border-b-[1.6px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); border-color: rgb(159,106,51); text-decoration: none;">
+          <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sobre Nosotros</p>
+          <h2 class="text-[rgb(59,35,20)] text-[36px] mb-5" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Un café que se siente como en casa</h2>
+          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">En Café del Bueno creemos que un gran café comienza mucho antes de llegar a la taza. Nace en la cuidadosa selección de granos de especialidad, continúa en una preparación realizada con dedicación y se completa en un ambiente pensado para disfrutar sin prisa.</p>
+          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Creamos este espacio con un propósito simple: ofrecer una experiencia que invite a hacer una pausa, compartir una conversación, leer un buen libro o simplemente disfrutar de un café excepcional.</p>
+          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Cada bebida y cada preparación reflejan nuestro compromiso con la calidad, la calidez y la atención a los detalles. Queremos que cada visita sea un momento para recordar y una razón para volver.</p>
+          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-6">Bienvenido a Café del Bueno, donde el buen café y los buenos momentos siempre encuentran un lugar.</p>
+          <a href="#contacto" class="inline-flex items-center gap-2 uppercase text-[14px] tracking-[0.4px] pb-1 border-b-[1.6px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); border-color: rgb(159,106,51); text-decoration: none;">
             Visítanos
             <i data-lucide="arrow-right" size="14"></i>
           </a>
         </div>
         <div class="order-1 md:order-2 relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
           <img src="img/cafe.jpg" alt="Interior de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </section>
+  `;
+
+  const salaLecturaHtml = `
+    <section id="sala-lectura" class="py-14 px-5 md:py-20 md:px-[30px] border-t" style="background-color: rgb(252,248,243); border-color: rgb(240,232,220);">
+      <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
+          <img src="img/sala-lectura.png" alt="Sala de Lectura de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Un Rincón Para Leer</p>
+          <h2 class="text-[rgb(59,35,20)] text-[36px] mb-5" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Sala de Lectura</h2>
+          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Tenemos un rincón pensado para disfrutar de un buen libro con calma. Puedes venir simplemente a leer, o traer un libro propio e intercambiarlo por otro de nuestra sala — una forma más de compartir entre quienes aman la lectura tanto como el café.</p>
+          <p class="italic text-[rgb(120,80,40)] text-[17px] leading-[29px]">"Aspiramos a ser un punto de encuentro para quienes disfrutan del buen café, la cultura y las conversaciones que nacen alrededor de una mesa."</p>
         </div>
       </div>
     </section>
@@ -329,7 +334,7 @@ function buildMainHTML() {
       <div class="relative z-[1] ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-3">
           <p class="uppercase text-[rgb(230,210,180)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Lo Que Dicen Nuestros Clientes</p>
-          <h2 class="text-white text-[32px] mb-3" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">Reseñas</h2>
+          <h2 class="text-white text-[32px] mb-3" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Reseñas</h2>
         </div>
         <p class="text-center text-[rgb(225,210,195)] text-[13px] italic mb-10 max-w-[520px] mx-auto">Esto es lo que dicen quienes ya probaron un CAFÉ DEL BUENO.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -355,14 +360,15 @@ function buildMainHTML() {
     <footer role="contentinfo" id="contacto" class="shrink-0" style="background-color: rgb(40,25,14);">
       <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-10 md:gap-y-12 pt-14 pr-5 pb-10 pl-5 md:pt-20 md:pr-[30px] md:pb-14 md:pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
         <div>
-          <h3 class="mb-1 text-[28px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700; color: white;">CAFÉ DEL BUENO</h3>
-          <p class="uppercase mb-6 text-[11px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
-          <div class="flex items-start gap-2 mb-3 text-[14px]" style="color: rgb(194,151,106);">
-            <i data-lucide="map-pin" size="14" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
+          <img src="img/logo.svg" alt="CAFÉ DEL BUENO" class="object-contain mb-3" style="width: 88px; height: 88px;" />
+          <h3 class="mb-1 text-[28px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700; color: white;">CAFÉ DEL BUENO</h3>
+          <p class="uppercase mb-6 text-[13px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
+          <div class="flex items-start gap-2 mb-3 text-[16px]" style="color: rgb(194,151,106);">
+            <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
             <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
           </div>
-          <div class="flex items-center gap-2 mb-6 text-[14px]" style="color: rgb(194,151,106);">
-            <i data-lucide="mail" size="14" class="shrink-0" style="color: rgb(159,106,51);"></i>
+          <div class="flex items-center gap-2 mb-6 text-[16px]" style="color: rgb(194,151,106);">
+            <i data-lucide="mail" size="15" class="shrink-0" style="color: rgb(159,106,51);"></i>
             <a href="mailto:cafedelbueno.cl@gmail.com" class="hover:text-white transition-colors duration-300">cafedelbueno.cl@gmail.com</a>
           </div>
           <div class="flex gap-3">
@@ -375,10 +381,10 @@ function buildMainHTML() {
           </div>
         </div>
         <div>
-          <p class="uppercase mb-6 flex items-center gap-2 text-[11px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">
-            <i data-lucide="clock" size="12"></i> Horarios
+          <p class="uppercase mb-6 flex items-center gap-2 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">
+            <i data-lucide="clock" size="14"></i> Horarios
           </p>
-          <div class="flex flex-col gap-3 text-[14px]">
+          <div class="flex flex-col gap-3 text-[16px]">
             ${[['Lunes – Sábado','14:30 – 20:30'],['Domingo y feriados','Cerrado']].map(([day, time]) => `
               <div class="flex justify-between items-center gap-8 pb-2 border-b" style="border-color: rgba(194,151,106,0.2);">
                 <span style="color: rgb(194,151,106);">${day}</span>
@@ -388,16 +394,16 @@ function buildMainHTML() {
           </div>
         </div>
         <div>
-          <p class="uppercase mb-6 text-[11px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
-          <p class="mb-5 text-[14px] leading-[22px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
-          <a href="tel:+56961348234" class="block mb-2 text-[14px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
-          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[14px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">cafedelbueno.cl@gmail.com</a>
+          <p class="uppercase mb-6 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
+          <p class="mb-5 text-[16px] leading-[24px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
+          <a href="tel:+56961348234" class="block mb-2 text-[16px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
+          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[16px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">cafedelbueno.cl@gmail.com</a>
         </div>
       </div>
       <div class="border-t" style="border-color: rgba(194,151,106,0.15);">
         <div class="ml-auto mr-auto flex flex-col md:flex-row justify-between items-center gap-3 max-w-[1020px] pt-5 pr-[30px] pb-5 pl-[30px]">
-          <p class="uppercase text-center text-[10px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.5);">© 2026 CAFÉ DEL BUENO · Punta Arenas - Magallanes, Chile. Todos los derechos reservados.</p>
-          <p class="uppercase text-center text-[10px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.35);">Hecho del bueno.</p>
+          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.5);">© 2026 CAFÉ DEL BUENO · Punta Arenas - Magallanes, Chile. Todos los derechos reservados.</p>
+          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.35);">Hecho del bueno.</p>
         </div>
       </div>
     </footer>
@@ -412,7 +418,7 @@ function buildMainHTML() {
   `;
 
   return `
-    <div class="flex flex-col bg-white text-[rgb(59,35,20)] leading-[24px] min-h-[679.2px]" style="font-family: 'Fraunces', georgia, serif;">
+    <div class="flex flex-col bg-white text-[rgb(59,35,20)] leading-[24px] min-h-[679.2px]" style="font-family: 'Cormorant Garamond', georgia, serif;">
       ${headerHtml}
       ${topBarHtml}
       <main role="main" class="grow basis-0 shrink-0">
@@ -420,54 +426,13 @@ function buildMainHTML() {
         ${menuHtml}
         ${reservarHtml}
         ${nosotrosHtml}
+        ${salaLecturaHtml}
         ${reseñasHtml}
       </main>
       ${footerHtml}
       ${floatingHtml}
     </div>
   `;
-}
-
-// ============================================================
-// RENDERIZA UN PANEL DEL MENÚ (una página completa, con secciones)
-// ============================================================
-function renderMenuPanel(pageId) {
-  const panel = document.getElementById(`menu-panel-${pageId}`);
-  if (!panel) return;
-  // Si ya tiene contenido, no lo re-renderizamos para evitar parpadeos
-  if (panel.children.length > 0) return;
-
-  const page = menuPages[pageId];
-  if (!page) return;
-
-  let html = '';
-  page.sections.forEach(section => {
-    if (section.title) {
-      html += `<h3 class="text-[rgb(159,106,51)] text-[20px] mb-4 mt-2" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${section.title}</h3>`;
-    }
-    html += `<div class="grid grid-cols-1 gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(min(440px, 100%), 1fr));">`;
-    section.items.forEach(item => {
-      const iconName = getMenuItemIcon(item);
-      html += `
-        <div class="flex items-start justify-between gap-4 bg-white rounded-sm p-5 shadow-sm border border-[rgb(235,220,200)] hover:shadow-md transition-shadow duration-200">
-          <div class="flex items-start gap-3 flex-1 min-w-0">
-            <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: rgb(159,106,51);">
-              <i data-lucide="${iconName}" size="18" style="color: white;"></i>
-            </span>
-            <div class="flex-1 min-w-0">
-              <h4 class="text-[rgb(59,35,20)] text-[17px]" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${item.name}</h4>
-              ${item.description ? `<p class="text-[rgb(140,100,60)] text-[14px] leading-[22px] mt-0.5">${item.description}</p>` : ''}
-            </div>
-          </div>
-          <span class="text-[rgb(159,106,51)] text-[18px] mt-0.5 shrink-0" style="font-family: 'Fraunces', georgia, serif; font-weight: 700;">${item.price}</span>
-        </div>
-      `;
-    });
-    html += `</div>`;
-  });
-
-  panel.innerHTML = html;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 // ============================================================
@@ -479,46 +444,10 @@ function init() {
 
   root.innerHTML = buildMainHTML();
 
-  // Renderizar todas las páginas del menú
-  Object.keys(menuPages).forEach(pageId => {
-    renderMenuPanel(pageId);
-  });
-
   // Inicializar Lucide
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
-
-  // ========== MANEJO DE PESTAÑAS DEL MENÚ ==========
-  document.querySelectorAll('.menu-tab').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const tabId = this.dataset.tab;
-
-      document.querySelectorAll('.menu-tab').forEach(b => {
-        b.classList.remove('active');
-        b.style.backgroundColor = '#f0ebe6';
-        b.style.color = 'rgb(80, 60, 45)';
-        b.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
-      });
-
-      this.classList.add('active');
-      this.style.backgroundColor = 'rgb(59,35,20)';
-      this.style.color = 'white';
-      this.style.boxShadow = '0 4px 8px rgba(59,35,20,0.3)';
-
-      document.querySelectorAll('.menu-panel').forEach(p => {
-        p.classList.remove('active');
-        p.style.display = 'none';
-      });
-      const panel = document.getElementById(`menu-panel-${tabId}`);
-      if (panel) {
-        panel.classList.add('active');
-        panel.style.display = 'block';
-        renderMenuPanel(tabId);
-      }
-      if (typeof lucide !== 'undefined') lucide.createIcons();
-    });
-  });
 
   // ========== MENÚ MÓVIL (HAMBURGUESA) ==========
   const navToggleBtn = document.getElementById('nav-toggle-btn');
