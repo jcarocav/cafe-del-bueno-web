@@ -109,7 +109,7 @@ html {
 .h-20 { height: 5rem; }
 .text-\[16px\] { font-size: 16px; }
 .text-\[40px\] { font-size: 40px; }
-.navbar-logo { width: 100px; height: 100px; }
+.navbar-logo { width: 56px; height: 56px; }
 
 @media (min-width: 768px) {
   .md\:w-16 { width: 4rem; }

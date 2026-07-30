@@ -315,7 +315,7 @@ function buildMainHTML() {
     <section id="sala-lectura" class="py-14 px-5 md:py-20 md:px-[30px] border-t" style="background-color: rgb(252,248,243); border-color: rgb(240,232,220);">
       <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div class="relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
-          <img src="img/sala-lectura.png" alt="Sala de Lectura de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
+          <img src="img/sala-lectura.jpg" alt="Sala de Lectura de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
         </div>
         <div>
           <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Un Rincón Para Leer</p>
@@ -329,7 +329,7 @@ function buildMainHTML() {
 
   const reseñasHtml = `
     <section id="resenas" class="relative overflow-hidden py-14 px-5 md:py-20 md:px-[30px]" style="background-color: rgb(40,25,14);">
-      <img src="img/cafetera3.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="filter: blur(6px); transform: scale(1.1);" />
+      <img src="img/cafetera.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="filter: blur(6px); transform: scale(1.1);" />
       <div class="absolute inset-0" style="background: rgba(20,13,7,0.72);"></div>
       <div class="relative z-[1] ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-3">
@@ -360,9 +360,7 @@ function buildMainHTML() {
     <footer role="contentinfo" id="contacto" class="shrink-0" style="background-color: rgb(40,25,14);">
       <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-10 md:gap-y-12 pt-14 pr-5 pb-10 pl-5 md:pt-20 md:pr-[30px] md:pb-14 md:pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
         <div>
-          <img src="img/logo.svg" alt="CAFÉ DEL BUENO" class="object-contain mb-3" style="width: 88px; height: 88px;" />
-          <h3 class="mb-1 text-[28px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700; color: white;">CAFÉ DEL BUENO</h3>
-          <p class="uppercase mb-6 text-[13px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Café de Barrio</p>
+          <img src="img/logo-footer.svg" alt="CAFÉ DEL BUENO" style="width: 168px; height: auto; margin-bottom: 1.25rem;" />
           <div class="flex items-start gap-2 mb-3 text-[16px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
             <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
