@@ -113,13 +113,51 @@ const menuPages = {
 const MENU_PDF_URL = 'menu-cafe-del-bueno.pdf'; // TODO: reemplazar por el archivo/link real del menú en PDF
 
 const menuHighlights = [
-  { name: 'Latte Pistacho', image: 'img/menu-latte-pistacho.jpg' },
-  { name: 'Cappuccino', image: 'img/menu-cappuccino.jpg' },
-  { name: 'Affogato', image: 'img/menu-affogato.jpg' },
-  { name: 'Amor del Bueno', image: 'img/menu-amor-del-bueno.jpg' },
-  { name: 'Tortas "Del Bueno"', image: 'img/menu-tortas.jpg' },
-  { name: 'Tapaditos', image: 'img/menu-tapaditos.jpg' },
+  { name: 'Latte Pistacho', image: 'img/menu/pistacho.jpeg' },
+  { name: 'Cappuccino', image: 'img/menu/capuccino.jpg' },
+  { name: 'Chocolate Caliente', image: 'img/menu/chocolate-caliente.jpeg' },
+  { name: 'Amor del Bueno', image: 'img/menu/amor-del-bueno.jpeg' },
+  { name: 'Tortas "Del Bueno"', image: 'img/menu/tortas.jpeg' },
+  { name: 'Tapaditos', image: 'img/menu/tapaditos.jpeg' },
 ]; // TODO: reemplazar cada "image" por la foto real de la preparación
+
+// ============================================================
+// FOTOS EN LOOP (cuadros que van rotando fotos automáticamente,
+// usados en Nosotros y en Reservar Sala)
+// ============================================================
+const nosotrosGalleryImages = [
+  'img/nosotros/nosotros-1.jpg',
+  'img/nosotros/nosotros-2.jpg',
+  'img/nosotros/nosotros-3.png',
+]; // TODO: agregar las 2 fotos que faltan (dejé cafe.jpg como la primera)
+
+const roomsGalleryImages = [
+  'img/reserva/sala-reuniones-1.jpg',
+  'img/reserva/sala-reuniones-2.jpg',
+  'img/reserva/sala-reuniones-3.jpg',
+  'img/reserva/sala-reuniones-4.jpg',
+  'img/reserva/sala-reuniones-5.jpg',
+  'img/reserva/sala-reuniones-6.jpg',
+  'img/reserva/sala-reuniones-7.jpg',
+]; // TODO: reemplazar por los nombres reales de las 5 fotos que mandó la dueña
+
+const salaLecturaGalleryImages = [
+  'img/lectura/sala-lectura.png',
+  'img/lectura/lectura-2.jpg ',
+]; // TODO: reemplazar por los nombres reales de las 2 fotos de la Sala de Lectura
+
+// Arma un cuadro de foto (mismo tamaño/estilo que Nosotros y Sala de Lectura)
+// que va rotando entre varias imágenes automáticamente
+function buildPhotoLoopHtml(id, images, altBase) {
+  const imgsHtml = images.map((src, i) => `
+    <img src="${src}" alt="${altBase}" class="photo-loop-img${i === 0 ? ' active' : ''}" />
+  `).join('');
+  return `
+    <div id="${id}" class="photo-loop relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
+      ${imgsHtml}
+    </div>
+  `;
+}
 
 // ============================================================
 // DATOS DE SALAS
@@ -206,7 +244,7 @@ function buildMainHTML() {
   // ===== MENÚ: link a PDF + fotos destacadas (sin precios) =====
   const menuHighlightsHtml = menuHighlights.map(item => `
     <div class="text-center">
-      <div class="rounded-sm overflow-hidden mb-3" style="aspect-ratio: 1 / 1;">
+      <div class="rounded-sm overflow-hidden mb-4 shadow-lg" style="aspect-ratio: 1 / 1;">
         <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" />
       </div>
       <h4 class="text-[rgb(59,35,20)] text-[16px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${item.name}</h4>
@@ -221,12 +259,12 @@ function buildMainHTML() {
           <p class="text-center text-[rgb(120,80,40)] text-[17px] max-w-[520px] mx-auto leading-[28px]">Ingredientes seleccionados, preparaciones artesanales y el mejor café de origen único para cada momento del día.</p>
         </div>
         <div class="text-center mb-12">
-          <a href="${MENU_PDF_URL}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 uppercase text-white text-[14px] tracking-[0.4px] h-12 pt-[1.6px] pr-6 pb-0 pl-6" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: rgb(159,106,51); text-decoration: none;">
-            <i data-lucide="download" size="16"></i>
+          <a href="${MENU_PDF_URL}" target="_blank" rel="noopener noreferrer" class="menu-download-btn rounded-full shadow-lg inline-flex items-center gap-3 uppercase text-white text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: rgb(159,106,51); text-decoration: none; height: 58px; padding: 0 32px;">
+            <i data-lucide="download" size="19"></i>
             Descargar Menú Completo (PDF)
           </a>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8">
+        <div class="menu-highlights-grid grid grid-cols-2 md:grid-cols-3">
           ${menuHighlightsHtml}
         </div>
       </div>
@@ -234,38 +272,32 @@ function buildMainHTML() {
   `;
 
   // Reservar Sala
-  let roomsHtml = rooms.map(room => {
-    const iconName = room.icon;
+  let roomsHtml = rooms.map((room, idx) => {
     return `
-      <div class="room-card text-left rounded-sm overflow-hidden border-[1.6px]" style="border-color: rgba(194,151,106,0.25); background: rgba(255,255,255,0.03);">
-        <div class="relative h-52 overflow-hidden">
-          <img src="${room.image}" alt="${room.name}" class="w-full h-full object-cover" />
-          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(40,25,14,0.85) 0%, rgba(40,25,14,0.2) 60%);"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-5">
-            <div class="flex items-center gap-2 mb-1">
-              <i data-lucide="${iconName}" size="16" style="color: ${room.accent}; stroke-width: 1.5;"></i>
-              <span class="text-[rgb(230,210,180)] text-[12px] uppercase tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">${room.tagline}</span>
-            </div>
-            <h3 class="text-white text-[24px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${room.name}</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center${idx > 0 ? ' mt-16' : ''}">
+        ${buildPhotoLoopHtml(`room-photo-${room.id}`, roomsGalleryImages, room.name)}
+        <div class="text-left">
+          <div class="flex items-center gap-2 mb-3">
+            <i data-lucide="${room.icon}" size="17" style="color: ${room.accent}; stroke-width: 1.5;"></i>
+            <span class="uppercase text-[13px] tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(194,151,106);">${room.tagline}</span>
           </div>
-        </div>
-        <div class="p-5">
-          <p class="text-[rgb(228,214,196)] text-[16px] leading-[24px] mb-4">${room.description}</p>
+          <h3 class="text-white text-[32px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${room.name}</h3>
+          <p class="text-[rgb(228,214,196)] text-[17px] leading-[27px] mb-5">${room.description}</p>
           <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[15px]">
-              <i data-lucide="users" size="15" stroke-width="1.5"></i>
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[16px]">
+              <i data-lucide="users" size="16" stroke-width="1.5"></i>
               <span>${room.capacity}</span>
             </div>
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[15px]">
-              <i data-lucide="clock" size="15" stroke-width="1.5"></i>
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[16px]">
+              <i data-lucide="clock" size="16" stroke-width="1.5"></i>
               <span>${room.hours}</span>
             </div>
           </div>
-          <ul class="flex flex-wrap gap-2 mb-5">
+          <ul class="flex flex-wrap gap-2 mb-6">
             ${room.features.map(f => `<li class="text-[13px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.22); color: rgb(248,240,228); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
           </ul>
-          <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full h-11 uppercase tracking-[0.4px] text-white text-[15px] transition-opacity hover:opacity-90" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none;">
-            <i data-lucide="message-circle" size="16"></i>
+          <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn rounded-full shadow-lg inline-flex items-center gap-3 uppercase tracking-[0.4px] text-white text-[16px]" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; height: 58px; padding: 0 32px;">
+            <i data-lucide="message-circle" size="19"></i>
             Consultar disponibilidad
           </a>
         </div>
@@ -282,7 +314,7 @@ function buildMainHTML() {
           <h2 class="text-white text-[36px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Reservar una Sala</h2>
           <p class="text-[rgb(194,151,106)] max-w-[540px] mx-auto leading-[28px] text-[17px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
         </div>
-        <div class="grid grid-cols-1 max-w-[440px] mx-auto">
+        <div>
           ${roomsHtml}
         </div>
       </div>
@@ -304,8 +336,8 @@ function buildMainHTML() {
             <i data-lucide="arrow-right" size="14"></i>
           </a>
         </div>
-        <div class="order-1 md:order-2 relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
-          <img src="img/cafe.jpg" alt="Interior de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
+        <div class="order-1 md:order-2">
+          ${buildPhotoLoopHtml('nosotros-photo', nosotrosGalleryImages, 'Interior de CAFÉ DEL BUENO')}
         </div>
       </div>
     </section>
@@ -314,9 +346,7 @@ function buildMainHTML() {
   const salaLecturaHtml = `
     <section id="sala-lectura" class="py-14 px-5 md:py-20 md:px-[30px] border-t" style="background-color: rgb(252,248,243); border-color: rgb(240,232,220);">
       <div class="ml-auto mr-auto max-w-[1020px] grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div class="relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
-          <img src="img/sala-lectura.jpg" alt="Sala de Lectura de CAFÉ DEL BUENO" class="w-full h-full object-cover" />
-        </div>
+        ${buildPhotoLoopHtml('sala-lectura-photo', salaLecturaGalleryImages, 'Sala de Lectura de CAFÉ DEL BUENO')}
         <div>
           <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Un Rincón Para Leer</p>
           <h2 class="text-[rgb(59,35,20)] text-[36px] mb-5" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Sala de Lectura</h2>
@@ -329,7 +359,7 @@ function buildMainHTML() {
 
   const reseñasHtml = `
     <section id="resenas" class="relative overflow-hidden py-14 px-5 md:py-20 md:px-[30px]" style="background-color: rgb(40,25,14);">
-      <img src="img/cafetera.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="filter: blur(6px); transform: scale(1.1);" />
+      <img src="img/cafetera3.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="filter: blur(6px); transform: scale(1.1);" />
       <div class="absolute inset-0" style="background: rgba(20,13,7,0.72);"></div>
       <div class="relative z-[1] ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-3">
@@ -363,7 +393,7 @@ function buildMainHTML() {
           <img src="img/logo-footer.svg" alt="CAFÉ DEL BUENO" style="width: 168px; height: auto; margin-bottom: 1.25rem;" />
           <div class="flex items-start gap-2 mb-3 text-[16px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
-            <span>Carlos Condell 0109<br />Punta Arenas, Chile</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Carlos+Condell+0109%2C+Punta+Arenas%2C+Chile" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300" style="color: rgb(194,151,106); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(159,106,51,0.6);">Carlos Condell 0109<br />Punta Arenas, Chile</a>
           </div>
           <div class="flex items-center gap-2 mb-6 text-[16px]" style="color: rgb(194,151,106);">
             <i data-lucide="mail" size="15" class="shrink-0" style="color: rgb(159,106,51);"></i>
@@ -436,6 +466,22 @@ function buildMainHTML() {
 // ============================================================
 // INICIALIZACIÓN Y EVENTOS
 // ============================================================
+// ============================================================
+// ROTACIÓN AUTOMÁTICA DE FOTOS (cuadros .photo-loop)
+// ============================================================
+function initPhotoLoops() {
+  document.querySelectorAll('.photo-loop').forEach(container => {
+    const imgs = container.querySelectorAll('.photo-loop-img');
+    if (imgs.length <= 1) return;
+    let current = 0;
+    setInterval(() => {
+      imgs[current].classList.remove('active');
+      current = (current + 1) % imgs.length;
+      imgs[current].classList.add('active');
+    }, 4000);
+  });
+}
+
 function init() {
   const root = document.getElementById('root');
   if (!root) return;
@@ -446,6 +492,9 @@ function init() {
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
+
+  // Iniciar la rotación automática de fotos (Nosotros, Reservar Sala)
+  initPhotoLoops();
 
   // ========== MENÚ MÓVIL (HAMBURGUESA) ==========
   const navToggleBtn = document.getElementById('nav-toggle-btn');

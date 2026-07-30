@@ -117,7 +117,7 @@ html {
   .md\:w-20 { width: 5rem; }
   .md\:h-20 { height: 5rem; }
   .md\:text-\[40px\] { font-size: 40px; }
-  .navbar-logo { width: 170px; height: 170px; }
+  .navbar-logo { width: 160px; height: 160px; }
 }
 
 #root {
@@ -162,14 +162,42 @@ html {
   color: white !important;
 }
 
-/* Cards de Reservar Sala */
-.room-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+/* Cuadros de fotos en loop (Nosotros, Sala de Lectura y Reservar Sala) */
+.photo-loop-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
-.room-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+.photo-loop-img.active {
+  opacity: 1;
+}
+
+/* Grilla de fotos destacadas del menú, con más aire entre ellas */
+.menu-highlights-grid {
+  column-gap: 24px;
+  row-gap: 40px;
+}
+@media (min-width: 768px) {
+  .menu-highlights-grid {
+    column-gap: 40px;
+    row-gap: 48px;
+  }
+}
+
+/* Botones de descarga del menú y de WhatsApp */
+.menu-download-btn,
+.whatsapp-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.menu-download-btn:hover,
+.whatsapp-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
 }
 
 /* Ajustes para el footer y otros */
