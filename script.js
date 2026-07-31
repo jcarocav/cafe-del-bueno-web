@@ -249,7 +249,7 @@ function buildMainHTML() {
   const heroHtml = `
     <div class="relative mb-[60px] md:mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[480px] md:min-h-[600px]">
       <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 58%);"></div>
-      <img src="img/frontis.jpg" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
+      <img src="img/fondo.png" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
       <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
         <div class="text-left max-w-[460px]">
           <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">El arte del café,<br />servido con calidez.</h1>
