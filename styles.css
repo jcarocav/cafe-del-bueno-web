@@ -109,7 +109,7 @@ html {
 .h-20 { height: 5rem; }
 .text-\[16px\] { font-size: 16px; }
 .text-\[40px\] { font-size: 40px; }
-.navbar-logo { width: 130px; height: 130px; }
+.navbar-logo { width: 120px; height: 120px; }
 
 @media (min-width: 768px) {
   .md\:w-16 { width: 4rem; }
@@ -174,18 +174,6 @@ html {
 }
 .photo-loop-img.active {
   opacity: 1;
-}
-
-/* Grilla de fotos destacadas del menú, con más aire entre ellas */
-.menu-highlights-grid {
-  column-gap: 24px;
-  row-gap: 40px;
-}
-@media (min-width: 768px) {
-  .menu-highlights-grid {
-    column-gap: 40px;
-    row-gap: 48px;
-  }
 }
 
 /* Botones de descarga del menú y de WhatsApp */

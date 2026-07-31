@@ -113,12 +113,16 @@ const menuPages = {
 const MENU_PDF_URL = 'menu-cafe-del-bueno.pdf'; // TODO: reemplazar por el archivo/link real del menú en PDF
 
 const menuHighlights = [
-  { name: 'Latte Pistacho', image: 'img/menu/pistacho.jpeg' },
-  { name: 'Cappuccino', image: 'img/menu/capuccino.jpg' },
-  { name: 'Chocolate Caliente', image: 'img/menu/chocolate-caliente.jpeg' },
-  { name: 'Amor del Bueno', image: 'img/menu/amor-del-bueno.jpeg' },
-  { name: 'Tortas "Del Bueno"', image: 'img/menu/tortas.jpeg' },
-  { name: 'Tapaditos', image: 'img/menu/tapaditos.jpeg' },
+  { name: 'Latte Pistacho', image: 'img/menu/pistachos.jpg' },
+  { name: 'Cappuccino', image: 'img/menu/cafe3.jpg' },
+  { name: 'Affogato', image: 'img/menu/cafe4.jpg' },
+  { name: 'Amor del Bueno', image: 'img/menu/cafecrema.jpg' },
+  { name: 'Tortas "Del Bueno"', image: 'img/menu/cappuccino.jpg' },
+  { name: 'Tapaditos', image: 'img/menu/chocolate-caliente.jpeg' },
+  { name: 'Affogato', image: 'img/menu/galletas.jpg' },
+  { name: 'Amor del Bueno', image: 'img/menu/pistacho.jpeg' },
+  { name: 'Tortas "Del Bueno"', image: 'img/menu/torta1.jpg' },
+  { name: 'Tapaditos', image: 'img/menu/amor-del-bueno.jpeg' },
 ]; // TODO: reemplazar cada "image" por la foto real de la preparación
 
 // ============================================================
@@ -131,19 +135,27 @@ const nosotrosGalleryImages = [
   'img/nosotros/nosotros-3.png',
 ]; // TODO: agregar las 2 fotos que faltan (dejé cafe.jpg como la primera)
 
-const roomsGalleryImages = [
-  'img/reserva/sala-reuniones-1.jpg',
+const salaReunionesGalleryImages = [
+  'img/s.reu/reu1.jpg',
+  'img/s.reu/reu2.jpg',
+  'img/s.reu/reu3.jpg',
+]; // TODO: reemplazar por los nombres reales de las fotos de la Sala de Reuniones
+
+const salaEnsayoGalleryImages = [
+  'img/reserva/sala-reuniones-8.jpg',
   'img/reserva/sala-reuniones-2.jpg',
   'img/reserva/sala-reuniones-3.jpg',
   'img/reserva/sala-reuniones-4.jpg',
   'img/reserva/sala-reuniones-5.jpg',
-  'img/reserva/sala-reuniones-6.jpg',
-  'img/reserva/sala-reuniones-7.jpg',
-]; // TODO: reemplazar por los nombres reales de las 5 fotos que mandó la dueña
+  'img/reserva/sala-reuniones-6.jpg',,
+  'img/reserva/sala-reuniones-1.jpg',
+]; // TODO: reemplazar por los nombres reales de las fotos de la Sala de Ensayo
 
 const salaLecturaGalleryImages = [
-  'img/lectura/sala-lectura.png',
-  'img/lectura/lectura-2.jpg ',
+  'img/lectura/lectura-1.jpg',
+  'img/lectura/lectura-2.jpg',
+  'img/lectura/lectura-3.jpg',
+  'img/lectura/lectura-4.jpg',
 ]; // TODO: reemplazar por los nombres reales de las 2 fotos de la Sala de Lectura
 
 // Arma un cuadro de foto (mismo tamaño/estilo que Nosotros y Sala de Lectura)
@@ -164,17 +176,29 @@ function buildPhotoLoopHtml(id, images, altBase) {
 // ============================================================
 const rooms = [
   {
-    id: 'eventos',
-    name: 'Sala de Reuniones y Sala de Ensayo',
+    id: 'reuniones',
+    name: 'Sala de Reuniones',
     tagline: 'Tu espacio, tus ideas',
-    description: 'Contamos con 2 salas versátiles para reuniones, talleres, presentaciones, lanzamientos o celebraciones privadas. Perfecta para cada ocasión.',
+    description: 'Un espacio ideal para reuniones, cumpleaños, baby shower, talleres, etc. con la comodidad de un buen café.',
     icon: 'users',
-    capacity: 'Hasta 30 personas',
+    capacity: 'Hasta 15 personas', // TODO: confirmar capacidad real con la dueña
     hours: 'Disponible con reservación previa',
-    features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
-    image: 'img/sala-reuniones.jpg', // TODO: reemplazar por la foto real que mande la dueña
+    features: ['Sólo con reservación', 'Servicio de café incluido'],
+    gallery: salaReunionesGalleryImages,
     accent: 'rgb(59,35,14)',
-  }
+  },
+  {
+    id: 'ensayo',
+    name: 'Sala de Ensayo',
+    tagline: 'Espacio para crear',
+    description: 'Un espacio ideal para actividades artísticas-culturales, como baile, canto, obras de teatro,exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
+    icon: 'music',
+    capacity: '30 - 40 personas', // TODO: confirmar capacidad real con la dueña
+    hours: 'Disponible con reservación previa',
+    features: ['Sólo con reservación', 'Configuración flexible'],
+    gallery: salaEnsayoGalleryImages,
+    accent: 'rgb(59,35,14)',
+  },
 ];
 
 // ============================================================
@@ -217,20 +241,20 @@ function buildMainHTML() {
   const topBarHtml = `
     <div class="bg-[rgb(40,25,14)] z-[99]">
       <div class="ml-auto mr-auto text-center text-white max-w-[1020px] py-2 px-[30px]">
-        <p class="text-center text-[16px] md:text-[17px] leading-[24px]">☕ Primera cafetería en el Barrio Prat de Punta Arenas.</p>
+        <p class="text-center text-[17px] md:text-[18px] leading-[24px]">Primera cafetería en Barrio Prat - Punta Arenas.</p>
       </div>
     </div>
   `;
 
   const heroHtml = `
     <div class="relative mb-[60px] md:mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[480px] md:min-h-[600px]">
-      <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 68%);"></div>
-      <img src="img/fondo.png" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
+      <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 58%);"></div>
+      <img src="img/frontis.jpg" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
       <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
         <div class="text-left max-w-[460px]">
           <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">El arte del café,<br />servido con calidez.</h1>
           <div class="text-left">
-            <p class="text-left mt-[16px] md:mt-[20px] text-[15px] md:text-[17px] leading-[24px] md:leading-[26px] max-w-[420px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">En Café del Bueno creemos que un buen café tiene el poder de transformar un momento cotidiano en una experiencia memorable. Te invitamos a disfrutar de café de especialidad, sabores cuidadosamente seleccionados y un ambiente pensado para hacerte sentir como en casa. Bienvenido a tu nuevo lugar favorito.</p>
+            <p class="text-left mt-[16px] md:mt-[20px] text-[16px] md:text-[18px] leading-[24px] md:leading-[26px] max-w-[420px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">En Café del Bueno creemos que un buen café tiene el poder de transformar un momento cotidiano en una experiencia memorable. Te invitamos a disfrutar de café de especialidad, sabores cuidadosamente seleccionados y un ambiente pensado para hacerte sentir como en casa. Bienvenido a tu nuevo lugar favorito.</p>
           </div>
           <div class="flex flex-wrap items-center gap-3 md:gap-4 mt-[20px] md:mt-[24px]">
             <a href="#menu" class="inline-block text-center uppercase align-middle whitespace-nowrap h-11 md:h-12 bg-[rgb(159,106,51)] tracking-[0.4px] leading-[42px] md:leading-[46px] min-w-[110px] md:min-w-[120px] pt-[1.6px] pr-4 pb-0 pl-4" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; color: white;">Menú</a>
@@ -242,21 +266,14 @@ function buildMainHTML() {
   `;
 
   // ===== MENÚ: link a PDF + fotos destacadas (sin precios) =====
-  const menuHighlightsHtml = menuHighlights.map(item => `
-    <div class="text-center">
-      <div class="rounded-sm overflow-hidden mb-4 shadow-lg" style="aspect-ratio: 1 / 1;">
-        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" />
-      </div>
-      <h4 class="text-[rgb(59,35,20)] text-[16px]" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${item.name}</h4>
-    </div>
-  `).join('');
+  const menuGalleryImages = menuHighlights.map(item => item.image);
 
   const menuHtml = `
     <section id="menu" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-8">
           <h2 class="text-center mb-3 text-[36px] md:text-[40px]" style="font-family: 'Cormorant Garamond', georgia, serif; color: rgb(59,35,20); font-weight: 700;">Nuestro Menú</h2>
-          <p class="text-center text-[rgb(120,80,40)] text-[17px] max-w-[520px] mx-auto leading-[28px]">Ingredientes seleccionados, preparaciones artesanales y el mejor café de origen único para cada momento del día.</p>
+          <p class="text-center text-[rgb(120,80,40)] text-[18px] max-w-[520px] mx-auto leading-[28px]">Ingredientes seleccionados, preparaciones artesanales y el mejor café de origen único para cada momento del día.</p>
         </div>
         <div class="text-center mb-12">
           <a href="${MENU_PDF_URL}" target="_blank" rel="noopener noreferrer" class="menu-download-btn rounded-full shadow-lg inline-flex items-center gap-3 uppercase text-white text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: rgb(159,106,51); text-decoration: none; height: 58px; padding: 0 32px;">
@@ -264,8 +281,8 @@ function buildMainHTML() {
             Descargar Menú Completo (PDF)
           </a>
         </div>
-        <div class="menu-highlights-grid grid grid-cols-2 md:grid-cols-3">
-          ${menuHighlightsHtml}
+        <div class="max-w-[480px] ml-auto mr-auto shadow-lg" style="border-radius: 4px; overflow: hidden;">
+          ${buildPhotoLoopHtml('menu-photo-loop', menuGalleryImages, 'Preparaciones de CAFÉ DEL BUENO')}
         </div>
       </div>
     </section>
@@ -273,22 +290,27 @@ function buildMainHTML() {
 
   // Reservar Sala
   let roomsHtml = rooms.map((room, idx) => {
+    const photoFirst = idx % 2 === 1; // sala 1 (Ensayo): foto a la izquierda; sala 0 (Reuniones): foto a la derecha
+    const photoOrder = photoFirst ? '' : 'order-1 md:order-2';
+    const textOrder = photoFirst ? '' : 'order-2 md:order-1';
     return `
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center${idx > 0 ? ' mt-16' : ''}">
-        ${buildPhotoLoopHtml(`room-photo-${room.id}`, roomsGalleryImages, room.name)}
-        <div class="text-left">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center" style="${idx > 0 ? 'margin-top: 88px;' : ''}">
+        <div class="${photoOrder}">
+          ${buildPhotoLoopHtml(`room-photo-${room.id}`, room.gallery, room.name)}
+        </div>
+        <div class="text-left ${textOrder}">
           <div class="flex items-center gap-2 mb-3">
             <i data-lucide="${room.icon}" size="17" style="color: ${room.accent}; stroke-width: 1.5;"></i>
             <span class="uppercase text-[13px] tracking-[1.5px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(194,151,106);">${room.tagline}</span>
           </div>
           <h3 class="text-white text-[32px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${room.name}</h3>
-          <p class="text-[rgb(228,214,196)] text-[17px] leading-[27px] mb-5">${room.description}</p>
+          <p class="text-[rgb(228,214,196)] text-[18px] leading-[27px] mb-5">${room.description}</p>
           <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[16px]">
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[17px]">
               <i data-lucide="users" size="16" stroke-width="1.5"></i>
               <span>${room.capacity}</span>
             </div>
-            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[16px]">
+            <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[17px]">
               <i data-lucide="clock" size="16" stroke-width="1.5"></i>
               <span>${room.hours}</span>
             </div>
@@ -312,7 +334,7 @@ function buildMainHTML() {
         <div class="text-center mb-14">
           <p class="uppercase text-[rgb(194,151,106)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Espacio Privado</p>
           <h2 class="text-white text-[36px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Reservar una Sala</h2>
-          <p class="text-[rgb(194,151,106)] max-w-[540px] mx-auto leading-[28px] text-[17px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
+          <p class="text-[rgb(194,151,106)] max-w-[540px] mx-auto leading-[28px] text-[18px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
         </div>
         <div>
           ${roomsHtml}
@@ -327,10 +349,10 @@ function buildMainHTML() {
         <div class="order-2 md:order-1">
           <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sobre Nosotros</p>
           <h2 class="text-[rgb(59,35,20)] text-[36px] mb-5" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Un café que se siente como en casa</h2>
-          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">En Café del Bueno creemos que un gran café comienza mucho antes de llegar a la taza. Nace en la cuidadosa selección de granos de especialidad, continúa en una preparación realizada con dedicación y se completa en un ambiente pensado para disfrutar sin prisa.</p>
-          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Creamos este espacio con un propósito simple: ofrecer una experiencia que invite a hacer una pausa, compartir una conversación, leer un buen libro o simplemente disfrutar de un café excepcional.</p>
-          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Cada bebida y cada preparación reflejan nuestro compromiso con la calidad, la calidez y la atención a los detalles. Queremos que cada visita sea un momento para recordar y una razón para volver.</p>
-          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-6">Bienvenido a Café del Bueno, donde el buen café y los buenos momentos siempre encuentran un lugar.</p>
+          <p class="text-[rgb(90,65,45)] text-[18px] leading-[28px] mb-4">En Café del Bueno creemos que un gran café comienza mucho antes de llegar a la taza. Nace en la cuidadosa selección de granos de especialidad, continúa en una preparación realizada con dedicación y se completa en un ambiente pensado para disfrutar sin prisa.</p>
+          <p class="text-[rgb(90,65,45)] text-[18px] leading-[28px] mb-4">Creamos este espacio con un propósito simple: ofrecer una experiencia que invite a hacer una pausa, compartir una conversación, leer un buen libro o simplemente disfrutar de un café excepcional.</p>
+          <p class="text-[rgb(90,65,45)] text-[18px] leading-[28px] mb-4">Cada bebida y cada preparación reflejan nuestro compromiso con la calidad, la calidez y la atención a los detalles. Queremos que cada visita sea un momento para recordar y una razón para volver.</p>
+          <p class="text-[rgb(90,65,45)] text-[18px] leading-[28px] mb-6">Bienvenido a Café del Bueno, donde el buen café y los buenos momentos siempre encuentran un lugar.</p>
           <a href="#contacto" class="inline-flex items-center gap-2 uppercase text-[14px] tracking-[0.4px] pb-1 border-b-[1.6px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); border-color: rgb(159,106,51); text-decoration: none;">
             Visítanos
             <i data-lucide="arrow-right" size="14"></i>
@@ -350,8 +372,8 @@ function buildMainHTML() {
         <div>
           <p class="uppercase text-[rgb(159,106,51)] text-[14px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Un Rincón Para Leer</p>
           <h2 class="text-[rgb(59,35,20)] text-[36px] mb-5" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Sala de Lectura</h2>
-          <p class="text-[rgb(90,65,45)] text-[17px] leading-[28px] mb-4">Tenemos un rincón pensado para disfrutar de un buen libro con calma. Puedes venir simplemente a leer, o traer un libro propio e intercambiarlo por otro de nuestra sala — una forma más de compartir entre quienes aman la lectura tanto como el café.</p>
-          <p class="italic text-[rgb(120,80,40)] text-[17px] leading-[29px]">"Aspiramos a ser un punto de encuentro para quienes disfrutan del buen café, la cultura y las conversaciones que nacen alrededor de una mesa."</p>
+          <p class="text-[rgb(90,65,45)] text-[18px] leading-[28px] mb-4">Tenemos un rincón pensado para disfrutar de un buen libro con calma. Puedes venir simplemente a leer, o traer un libro propio e intercambiarlo por otro de nuestra sala — una forma más de compartir entre quienes aman la lectura tanto como el café.</p>
+          <p class="italic text-[rgb(120,80,40)] text-[18px] leading-[29px]">"Aspiramos a ser un punto de encuentro para quienes disfrutan del buen café, la cultura y las conversaciones que nacen alrededor de una mesa."</p>
         </div>
       </div>
     </section>
@@ -377,7 +399,7 @@ function buildMainHTML() {
               <div class="flex gap-0.5 mb-3" style="color: rgb(159,106,51);">
                 ${Array(5).fill('<i data-lucide="star" size="14" fill="currentColor"></i>').join('')}
               </div>
-              <p class="text-[rgb(80,60,45)] text-[14px] leading-[22px] mb-4">"${r.text}"</p>
+              <p class="text-[rgb(80,60,45)] text-[15px] leading-[22px] mb-4">"${r.text}"</p>
               <p class="text-[rgb(59,35,20)] text-[13px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500;">${r.name}</p>
             </div>
           `).join('')}
@@ -391,11 +413,11 @@ function buildMainHTML() {
       <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-10 md:gap-y-12 pt-14 pr-5 pb-10 pl-5 md:pt-20 md:pr-[30px] md:pb-14 md:pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
         <div>
           <img src="img/logo-footer.svg" alt="CAFÉ DEL BUENO" style="width: 168px; height: auto; margin-bottom: 1.25rem;" />
-          <div class="flex items-start gap-2 mb-3 text-[16px]" style="color: rgb(194,151,106);">
+          <div class="flex items-start gap-2 mb-3 text-[17px]" style="color: rgb(194,151,106);">
             <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
             <a href="https://www.google.com/maps/search/?api=1&query=Carlos+Condell+0109%2C+Punta+Arenas%2C+Chile" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300" style="color: rgb(194,151,106); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(159,106,51,0.6);">Carlos Condell 0109<br />Punta Arenas, Chile</a>
           </div>
-          <div class="flex items-center gap-2 mb-6 text-[16px]" style="color: rgb(194,151,106);">
+          <div class="flex items-center gap-2 mb-6 text-[17px]" style="color: rgb(194,151,106);">
             <i data-lucide="mail" size="15" class="shrink-0" style="color: rgb(159,106,51);"></i>
             <a href="mailto:cafedelbueno.cl@gmail.com" class="hover:text-white transition-colors duration-300">cafedelbueno.cl@gmail.com</a>
           </div>
@@ -412,7 +434,7 @@ function buildMainHTML() {
           <p class="uppercase mb-6 flex items-center gap-2 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">
             <i data-lucide="clock" size="14"></i> Horarios
           </p>
-          <div class="flex flex-col gap-3 text-[16px]">
+          <div class="flex flex-col gap-3 text-[17px]">
             ${[['Lunes – Sábado','14:30 – 20:30'],['Domingo y feriados','Cerrado']].map(([day, time]) => `
               <div class="flex justify-between items-center gap-8 pb-2 border-b" style="border-color: rgba(194,151,106,0.2);">
                 <span style="color: rgb(194,151,106);">${day}</span>
@@ -423,9 +445,9 @@ function buildMainHTML() {
         </div>
         <div>
           <p class="uppercase mb-6 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
-          <p class="mb-5 text-[16px] leading-[24px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
-          <a href="tel:+56961348234" class="block mb-2 text-[16px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
-          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[16px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">cafedelbueno.cl@gmail.com</a>
+          <p class="mb-5 text-[17px] leading-[24px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
+          <a href="tel:+56961348234" class="block mb-2 text-[17px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
+          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[17px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">cafedelbueno.cl@gmail.com</a>
         </div>
       </div>
       <div class="border-t" style="border-color: rgba(194,151,106,0.15);">
