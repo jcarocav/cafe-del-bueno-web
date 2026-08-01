@@ -188,6 +188,11 @@ html {
   opacity: 0.95;
 }
 
+/* Teléfono del footer */
+.footer-phone-link:hover {
+  color: rgb(196, 138, 80);
+}
+
 /* Ajustes para el footer y otros */
 footer a {
   transition: color 0.3s;

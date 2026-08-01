@@ -20,93 +20,6 @@ function buildRoomAvailabilityLink(roomName) {
 }
 
 // ============================================================
-// DATOS DEL MENÚ — carta real del local (referencia interna con precios,
-// ya no se muestra en la web; se usa el PDF + fotos destacadas en su lugar)
-// ============================================================
-const menuPages = {
-  pagina1: {
-    label: 'Página 1',
-    sections: [
-      {
-        title: 'Bebidas Calientes',
-        items: [
-          { name: 'Espresso', description: 'Intenso y concentrado. 25 - 30 ml', price: '$2.000' },
-          { name: 'Espresso Doble', description: 'Intenso y concentrado. 50 - 60 ml', price: '$2.500' },
-          { name: 'Cappuccino', description: 'Espresso suave y cremoso, coronado con una capa de espuma de leche ligera', price: '$3.500' },
-          { name: 'Flat White', description: 'Espresso fuerte con leche vaporizada y una fina capa de espuma', price: '$3.600' },
-          { name: 'Latte', description: 'Espresso suave con leche vaporizada y una ligera capa de espuma, una delicia equilibrada', price: '$3.800' },
-          { name: 'Latte Pistacho', description: 'Base de crema de pistacho, leche vaporizada, espresso suave, una ligera capa de espuma y finaliza con pistacho molido en superficie', price: '$4.700' },
-          { name: 'Mocaccino', description: 'Espresso con chocolate y leche vaporizada', price: '$3.900' },
-          { name: 'Americano', description: 'Espresso diluido con agua caliente, para un sabor suave pero robusto', price: '$3.000' },
-          { name: 'Cortado', description: 'Espresso con una pequeña cantidad de leche caliente', price: '$3.200' },
-          { name: 'Macchiato', description: 'Espresso con una pequeña cantidad de leche espumada', price: '$2.900' },
-          { name: 'Café Bombón', description: 'Espresso endulzado con leche condensada', price: '$3.900' },
-          { name: 'Chai Latte', description: '', price: '$3.800' },
-          { name: 'Chocolate Caliente', description: '', price: '$4.500' },
-          { name: 'Café Instantáneo', description: '', price: '$2.000' },
-          { name: 'Café Instantáneo con Leche', description: '', price: '$2.500' },
-          { name: 'Té Negro', description: '', price: '$2.600' },
-          { name: 'Té Negro con Leche', description: '', price: '$3.200' },
-          { name: 'Infusiones Artesanales', description: 'Cinnamon Apple, Green Cucumber, Green Ginger, Black Orange, Purple Winter, Black Chai', price: '$2.600' },
-        ],
-      },
-      {
-        title: 'Bebidas Frías',
-        items: [
-          { name: 'Affogato', description: 'Helado de vainilla con espresso de especialidad', price: '$4.500' },
-          { name: 'Café Helado', description: '', price: '$5.500' },
-          { name: 'Ice Chai Latte', description: '', price: '$4.200' },
-          { name: 'Leche con Plátano', description: '', price: '$3.800' },
-          { name: 'Amor del Bueno', description: 'Batido de frutilla, coronado con crema y salsa de chocolate', price: '$4.500' },
-        ],
-      },
-      {
-        title: 'Adicionales',
-        items: [
-          { name: 'Syrup Shot', description: '', price: '$600' },
-          { name: 'Leche Vegetal', description: '', price: '$500' },
-          { name: 'Leche sin Lactosa', description: '', price: '$300' },
-        ],
-      },
-    ],
-  },
-  pagina2: {
-    label: 'Página 2',
-    sections: [
-      {
-        title: 'Dulces',
-        items: [
-          { name: 'Tortas "Del Bueno"', description: 'Consultar opciones del día', price: '$4.900' },
-          { name: 'Kuchen o Pie "Del Bueno"', description: 'Consultar opciones del día', price: '$3.900' },
-          { name: 'Medialuna', description: 'Medialuna sola o con crema pastelera', price: '$1.900' },
-          { name: 'Rollitos de Canela', description: '', price: '$4.000' },
-          { name: 'Surtido de Galletas', description: '', price: '$4.800' },
-        ],
-      },
-      {
-        title: 'Salados',
-        items: [
-          { name: 'Tostadas 1 (Palta)', description: '2 tostadas en pan de molde con palta', price: '$4.900' },
-          { name: 'Tostadas 2 (Mant/Merm)', description: '2 tostadas en pan de molde con mantequilla o mermelada', price: '$3.900' },
-          { name: 'Tapaditos', description: 'Sellado en pan de molde o pan pita con jamón y queso', price: '$4.200' },
-          { name: 'Agregado Palta', description: '', price: '$900' },
-        ],
-      },
-      {
-        title: 'Bebidas',
-        items: [
-          { name: 'Agua Mineral con Gas', description: '', price: '$1.200' },
-          { name: 'Agua Mineral sin Gas', description: '', price: '$1.200' },
-          { name: 'Bebidas', description: '', price: '$1.500' },
-          { name: 'Jugos (Botella)', description: '', price: '$1.800' },
-          { name: 'Pulpa', description: '', price: '$3.900' },
-        ],
-      },
-    ],
-  },
-};
-
-// ============================================================
 // MENÚ EN LA WEB — solo fotos + nombre, sin precios (el detalle
 // completo con precios va en el PDF descargable)
 // ============================================================
@@ -115,14 +28,14 @@ const MENU_PDF_URL = 'menu-cafe-del-bueno.pdf'; // TODO: reemplazar por el archi
 const menuHighlights = [
   { name: 'Latte Pistacho', image: 'img/menu/pistachos.jpg' },
   { name: 'Cappuccino', image: 'img/menu/cafe3.jpg' },
-  { name: 'Affogato', image: 'img/menu/cafe4.jpg' },
-  { name: 'Amor del Bueno', image: 'img/menu/cafecrema.jpg' },
-  { name: 'Tortas "Del Bueno"', image: 'img/menu/cappuccino.jpg' },
-  { name: 'Tapaditos', image: 'img/menu/chocolate-caliente.jpeg' },
-  { name: 'Affogato', image: 'img/menu/galletas.jpg' },
-  { name: 'Amor del Bueno', image: 'img/menu/pistacho.jpeg' },
-  { name: 'Tortas "Del Bueno"', image: 'img/menu/torta1.jpg' },
-  { name: 'Tapaditos', image: 'img/menu/amor-del-bueno.jpeg' },
+  { name: 'Affogato', image: 'img/menu/cafecrema.jpg' },
+  { name: 'Amor del Bueno', image: 'img/menu/galletas.jpg' },
+  { name: 'Tortas "Del Bueno"', image: 'img/menu/amor-del-bueno.jpeg' },
+  { name: 'Tapaditos', image: 'img/menu/cafe4.jpg' },
+  { name: 'Cappuccino 2', image: 'img/menu/cappuccino.jpg' },
+  { name: 'Chocolate Caliente', image: 'img/menu/chocolate-caliente.jpeg' },
+  { name: 'Café Pistacho', image: 'img/menu/pistacho.jpeg' },
+  { name: 'Torta', image: 'img/menu/torta1.jpg' },
 ]; // TODO: reemplazar cada "image" por la foto real de la preparación
 
 // ============================================================
@@ -142,13 +55,14 @@ const salaReunionesGalleryImages = [
 ]; // TODO: reemplazar por los nombres reales de las fotos de la Sala de Reuniones
 
 const salaEnsayoGalleryImages = [
-  'img/reserva/sala-reuniones-8.jpg',
-  'img/reserva/sala-reuniones-2.jpg',
-  'img/reserva/sala-reuniones-3.jpg',
-  'img/reserva/sala-reuniones-4.jpg',
-  'img/reserva/sala-reuniones-5.jpg',
-  'img/reserva/sala-reuniones-6.jpg',,
-  'img/reserva/sala-reuniones-1.jpg',
+  'img/ensayo/1.jpg',
+  'img/ensayo/2.jpg',
+  'img/ensayo/3.jpg',
+  'img/ensayo/4.jpg',
+  'img/ensayo/5.jpg',
+  'img/ensayo/6.jpg',
+  'img/ensayo/7.jpg',
+  'img/ensayo/8.jpg',
 ]; // TODO: reemplazar por los nombres reales de las fotos de la Sala de Ensayo
 
 const salaLecturaGalleryImages = [
@@ -179,25 +93,25 @@ const rooms = [
     id: 'reuniones',
     name: 'Sala de Reuniones',
     tagline: 'Tu espacio, tus ideas',
-    description: 'Un espacio ideal para reuniones, cumpleaños, baby shower, talleres, etc. con la comodidad de un buen café.',
+    description: 'Un espacio ideal para reuniones, cumpleaños, baby shower, talleres, etc. Con la comodidad de un buen café.',
     icon: 'users',
     capacity: 'Hasta 15 personas', // TODO: confirmar capacidad real con la dueña
     hours: 'Disponible con reservación previa',
-    features: ['Sólo con reservación', 'Servicio de café incluido'],
+    features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaReunionesGalleryImages,
-    accent: 'rgb(59,35,14)',
+    accent: 'rgb(216,182,148)',
   },
   {
     id: 'ensayo',
     name: 'Sala de Ensayo',
     tagline: 'Espacio para crear',
-    description: 'Un espacio ideal para actividades artísticas-culturales, como baile, canto, obras de teatro,exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
+    description: 'Un espacio ideal para actividades artísticas-culturales, como baile, canto,obras de teatro, exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
     icon: 'music',
-    capacity: '30 - 40 personas', // TODO: confirmar capacidad real con la dueña
+    capacity: 'Entre 30 - 40 personas', // TODO: confirmar capacidad real con la dueña
     hours: 'Disponible con reservación previa',
-    features: ['Sólo con reservación', 'Configuración flexible'],
+    features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaEnsayoGalleryImages,
-    accent: 'rgb(59,35,14)',
+    accent: 'rgb(216,182,148)',
   },
 ];
 
@@ -209,10 +123,10 @@ function buildMainHTML() {
   const headerHtml = `
     <header role="banner" id="top" class="fixed top-0 left-0 right-0 h-20 bg-white border-b z-[200] flex items-center justify-between px-4 md:px-6" style="border-bottom-color: rgb(232,232,232);">
       <nav aria-label="Main Navigation" role="navigation" class="nav-desktop flex items-center gap-6">
-        <a href="#menu" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Menú</a>
-        <a href="#reservar-sala" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Reservar Sala</a>
-        <a href="#nosotros" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Nosotros</a>
-        <a href="#sala-lectura" class="uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Sala de Lectura</a>
+        <a href="#menu" class="uppercase text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Menú</a>
+        <a href="#reservar-sala" class="uppercase text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Reservar Sala</a>
+        <a href="#nosotros" class="uppercase text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Nosotros</a>
+        <a href="#sala-lectura" class="uppercase text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Sala de Lectura</a>
       </nav>
 
       <button id="nav-toggle-btn" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
@@ -224,7 +138,7 @@ function buildMainHTML() {
       </a>
 
       <div class="flex items-center gap-6">
-        <a href="#contacto" class="nav-desktop uppercase text-sm tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Ubicación</a>
+        <a href="#contacto" class="nav-desktop uppercase text-[16px] tracking-[0.4px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(59,35,20); text-decoration: none;">Ubicación</a>
       </div>
     </header>
 
@@ -247,7 +161,7 @@ function buildMainHTML() {
   `;
 
   const heroHtml = `
-    <div class="relative mb-[60px] md:mb-[100px] bg-[rgb(48,48,48)] text-white min-h-[480px] md:min-h-[600px]">
+    <div class="relative bg-[rgb(48,48,48)] text-white min-h-[480px] md:min-h-[600px]">
       <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 58%);"></div>
       <img src="img/fondo.png" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
       <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
@@ -269,7 +183,7 @@ function buildMainHTML() {
   const menuGalleryImages = menuHighlights.map(item => item.image);
 
   const menuHtml = `
-    <section id="menu" style="background-color: rgb(252,248,243);" class="py-14 px-5 md:py-20 md:px-[30px]">
+    <section id="menu" style="background-color: rgb(252,248,243); padding-top: 32px;" class="px-5 pb-14 md:pb-20 md:px-[30px]">
       <div class="ml-auto mr-auto max-w-[1020px]">
         <div class="text-center mb-8">
           <h2 class="text-center mb-3 text-[36px] md:text-[40px]" style="font-family: 'Cormorant Garamond', georgia, serif; color: rgb(59,35,20); font-weight: 700;">Nuestro Menú</h2>
@@ -305,7 +219,7 @@ function buildMainHTML() {
           </div>
           <h3 class="text-white text-[32px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">${room.name}</h3>
           <p class="text-[rgb(228,214,196)] text-[18px] leading-[27px] mb-5">${room.description}</p>
-          <div class="flex flex-col gap-2 mb-4">
+          <div class="flex flex-col gap-2 mb-6">
             <div class="flex items-center gap-2 text-[rgb(235,222,205)] text-[17px]">
               <i data-lucide="users" size="16" stroke-width="1.5"></i>
               <span>${room.capacity}</span>
@@ -315,9 +229,6 @@ function buildMainHTML() {
               <span>${room.hours}</span>
             </div>
           </div>
-          <ul class="flex flex-wrap gap-2 mb-6">
-            ${room.features.map(f => `<li class="text-[13px] px-2 py-0.5 rounded-sm" style="background: rgba(194,151,106,0.22); color: rgb(248,240,228); font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.3px;">${f}</li>`).join('')}
-          </ul>
           <a href="${buildRoomAvailabilityLink(room.name)}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn rounded-full shadow-lg inline-flex items-center gap-3 uppercase tracking-[0.4px] text-white text-[16px]" style="background: #25D366; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; height: 58px; padding: 0 32px;">
             <i data-lucide="message-circle" size="19"></i>
             Consultar disponibilidad
@@ -388,7 +299,7 @@ function buildMainHTML() {
           <p class="uppercase text-[rgb(230,210,180)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Lo Que Dicen Nuestros Clientes</p>
           <h2 class="text-white text-[32px] mb-3" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700;">Reseñas</h2>
         </div>
-        <p class="text-center text-[rgb(225,210,195)] text-[13px] italic mb-10 max-w-[520px] mx-auto">Esto es lo que dicen quienes ya probaron un CAFÉ DEL BUENO.</p>
+        <p class="text-center text-[rgb(225,210,195)] italic mb-10 max-w-[520px] mx-auto" style="font-size: 19px;">Esto es lo que dicen quienes ya probaron un CAFÉ DEL BUENO.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           ${[
             { name: 'Claudia Leiva', text: 'Es un Café muy tranquilo en el centro de un barrio antiguo de la ciudad , si vienes en auto encuentras estacionamiento cerca, sin costo extra.' },
@@ -413,47 +324,48 @@ function buildMainHTML() {
       <div class="ml-auto mr-auto max-w-[1020px] grid gap-x-12 gap-y-10 md:gap-y-12 pt-14 pr-5 pb-10 pl-5 md:pt-20 md:pr-[30px] md:pb-14 md:pl-[30px]" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
         <div>
           <img src="img/logo-footer.svg" alt="CAFÉ DEL BUENO" style="width: 168px; height: auto; margin-bottom: 1.25rem;" />
-          <div class="flex items-start gap-2 mb-3 text-[17px]" style="color: rgb(194,151,106);">
-            <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(159,106,51);"></i>
-            <a href="https://www.google.com/maps/search/?api=1&query=Carlos+Condell+0109%2C+Punta+Arenas%2C+Chile" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300" style="color: rgb(194,151,106); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(159,106,51,0.6);">Carlos Condell 0109<br />Punta Arenas, Chile</a>
+          <div class="flex items-start gap-2 mb-3 text-[17px]" style="color: rgb(216,182,148);">
+            <i data-lucide="map-pin" size="15" class="shrink-0 mt-0.5" style="color: rgb(196,138,80);"></i>
+            <a href="https://www.google.com/maps/search/?api=1&query=Carlos+Condell+0109%2C+Punta+Arenas%2C+Chile" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300" style="color: rgb(216,182,148); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(196,138,80,0.7);">Carlos Condell 0109<br />Punta Arenas, Chile</a>
           </div>
-          <div class="flex items-center gap-2 mb-6 text-[17px]" style="color: rgb(194,151,106);">
-            <i data-lucide="mail" size="15" class="shrink-0" style="color: rgb(159,106,51);"></i>
+          <div class="flex items-center gap-2 mb-6 text-[17px]" style="color: rgb(216,182,148);">
+            <i data-lucide="mail" size="15" class="shrink-0" style="color: rgb(196,138,80);"></i>
             <a href="mailto:cafedelbueno.cl@gmail.com" class="hover:text-white transition-colors duration-300">cafedelbueno.cl@gmail.com</a>
           </div>
           <div class="flex gap-3">
-            <a href="https://www.instagram.com/cafedelbueno.cl" target="_blank" rel="noopener noreferrer" aria-label="Instagram de CAFÉ DEL BUENO" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+            <a href="https://www.instagram.com/cafedelbueno.cl" target="_blank" rel="noopener noreferrer" aria-label="Instagram de CAFÉ DEL BUENO" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(216,182,148,0.48); color: rgb(196,138,80);">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
-            <a href="https://www.facebook.com/p/Caf%C3%A9-Del-Bueno-61581862460295/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de CAFÉ DEL BUENO" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(194,151,106,0.35); color: rgb(159,106,51);">
+            <a href="https://www.facebook.com/p/Caf%C3%A9-Del-Bueno-61581862460295/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de CAFÉ DEL BUENO" class="social-btn w-8 h-8 flex items-center justify-center border-[1.6px]" style="border-color: rgba(216,182,148,0.48); color: rgb(196,138,80);">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
             </a>
           </div>
         </div>
         <div>
-          <p class="uppercase mb-6 flex items-center gap-2 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">
+          <p class="uppercase mb-6 flex items-center gap-2 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(196,138,80);">
             <i data-lucide="clock" size="14"></i> Horarios
           </p>
           <div class="flex flex-col gap-3 text-[17px]">
             ${[['Lunes – Sábado','14:30 – 20:30'],['Domingo y feriados','Cerrado']].map(([day, time]) => `
               <div class="flex justify-between items-center gap-8 pb-2 border-b" style="border-color: rgba(194,151,106,0.2);">
-                <span style="color: rgb(194,151,106);">${day}</span>
+                <span style="color: rgb(216,182,148);">${day}</span>
                 <span style="color: white; font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">${time}</span>
               </div>
             `).join('')}
           </div>
+          <img src="img/frontis.jpg" alt="CAFÉ DEL BUENO" class="rounded-sm object-cover" style="width: 100%; aspect-ratio: 4 / 3; margin-top: 24px;" />
         </div>
         <div>
-          <p class="uppercase mb-6 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(159,106,51);">Grupos &amp; Pedidos Especiales</p>
-          <p class="mb-5 text-[17px] leading-[24px]" style="color: rgb(194,151,106);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
-          <a href="tel:+56961348234" class="block mb-2 text-[17px] hover:text-[rgb(159,106,51)] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
-          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[17px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(194,151,106);">cafedelbueno.cl@gmail.com</a>
+          <p class="uppercase mb-6 text-[13px] tracking-[3px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(196,138,80);">Grupos &amp; Pedidos Especiales</p>
+          <p class="mb-5 text-[17px] leading-[24px]" style="color: rgb(216,182,148);">¿Vienes con un grupo grande o quieres coordinar algo para tu empresa o evento? Escríbenos directo y lo conversamos.</p>
+          <a href="tel:+56961348234" class="footer-phone-link block mb-2 text-[17px] transition-colors duration-300" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: white; text-decoration: none;">+56 9 6134 8234</a>
+          <a href="mailto:cafedelbueno.cl@gmail.com" class="text-[17px] underline underline-offset-4 hover:text-white transition-colors duration-300" style="color: rgb(216,182,148);">cafedelbueno.cl@gmail.com</a>
         </div>
       </div>
       <div class="border-t" style="border-color: rgba(194,151,106,0.15);">
         <div class="ml-auto mr-auto flex flex-col md:flex-row justify-between items-center gap-3 max-w-[1020px] pt-5 pr-[30px] pb-5 pl-[30px]">
-          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.5);">© 2026 CAFÉ DEL BUENO · Punta Arenas - Magallanes, Chile. Todos los derechos reservados.</p>
-          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(194,151,106,0.35);">Hecho del bueno.</p>
+          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(216,182,148,0.62);">© 2026 CAFÉ DEL BUENO · Punta Arenas - Magallanes, Chile. Todos los derechos reservados.</p>
+          <p class="uppercase text-center text-[12px] tracking-[2px]" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgba(216,182,148,0.48);">Hecho del bueno.</p>
         </div>
       </div>
     </footer>
