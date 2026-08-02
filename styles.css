@@ -182,6 +182,9 @@ html {
   object-fit: contain;
   background-color: rgb(240, 232, 220);
 }
+.photo-loop--auto {
+  aspect-ratio: 4 / 3; /* respaldo hasta que cargue la primera foto y JS ajuste la proporción real */
+}
 
 /* Botones de descarga del menú y de WhatsApp */
 .menu-download-btn,

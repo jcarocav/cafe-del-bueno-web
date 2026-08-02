@@ -23,20 +23,19 @@ function buildRoomAvailabilityLink(roomName) {
 // MENÚ EN LA WEB — solo fotos + nombre, sin precios (el detalle
 // completo con precios va en el PDF descargable)
 // ============================================================
-const MENU_PDF_URL = 'menu-cafe-del-bueno.pdf'; // TODO: reemplazar por el archivo/link real del menú en PDF
+const MENU_PDF_URL = 'img/menú.pdf'; // TODO: reemplazar por el archivo/link real del menú en PDF
 
 const menuHighlights = [
   { name: 'Latte Pistacho', image: 'img/menu/pistachos.jpg' },
   { name: 'Cappuccino', image: 'img/menu/cafe3.jpg' },
   { name: 'Affogato', image: 'img/menu/cafecrema.jpg' },
-  { name: 'Shot', image: 'img/menu/shot.jpg' },
+  { name: 'Pan', image: 'img/menu/pan.jpg' },
   { name: 'Tortas "Del Bueno"', image: 'img/menu/amor-del-bueno.jpeg' },
   { name: 'Tapaditos', image: 'img/menu/cafe4.jpg' },
   { name: 'Cappuccino 2', image: 'img/menu/cappuccino.jpg' },
   { name: 'Chocolate Caliente', image: 'img/menu/chocolate-caliente.jpeg' },
   { name: 'Café Pistacho', image: 'img/menu/pistacho.jpeg' },
   { name: 'Torta', image: 'img/menu/torta1.jpg' },
-  { name: 'Pan', image: 'img/menu/pan.jpg' },
 ]; // TODO: reemplazar cada "image" por la foto real de la preparación
 
 // ============================================================
@@ -76,13 +75,18 @@ const salaLecturaGalleryImages = [
 // Arma un cuadro de foto (mismo tamaño/estilo que Nosotros y Sala de Lectura)
 // que va rotando entre varias imágenes automáticamente.
 // fit: 'cover' (recorta para llenar el cuadro, por defecto) o 'contain' (se ve la foto completa, sin recortar)
-function buildPhotoLoopHtml(id, images, altBase, fit = 'cover') {
+// ratio: proporción fija del cuadro (ej. '4 / 3'), o 'auto' para que el cuadro se ajuste
+//        a la forma real de cada foto (útil si hay fotos verticales y horizontales mezcladas)
+function buildPhotoLoopHtml(id, images, altBase, fit = 'cover', ratio = '4 / 3') {
   const fitClass = fit === 'contain' ? ' photo-loop-img--contain' : '';
   const imgsHtml = images.map((src, i) => `
     <img src="${src}" alt="${altBase}" class="photo-loop-img${fitClass}${i === 0 ? ' active' : ''}" />
   `).join('');
+  const isAuto = ratio === 'auto';
+  const styleAttr = isAuto ? '' : ` style="aspect-ratio: ${ratio};"`;
+  const autoClass = isAuto ? ' photo-loop--auto' : '';
   return `
-    <div id="${id}" class="photo-loop relative rounded-sm overflow-hidden" style="aspect-ratio: 4 / 3;">
+    <div id="${id}" class="photo-loop relative rounded-sm overflow-hidden${autoClass}"${styleAttr}>
       ${imgsHtml}
     </div>
   `;
@@ -99,7 +103,7 @@ const rooms = [
     description: 'Un espacio ideal para reuniones, cumpleaños, baby shower, talleres, etc. Con la comodidad de un buen café.',
     icon: 'users',
     capacity: 'Hasta 15 personas', // TODO: confirmar capacidad real con la dueña
-    hours: 'Disponible con reserva previa',
+    hours: 'Disponible con reservación previa',
     features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaReunionesGalleryImages,
     accent: 'rgb(216,182,148)',
@@ -108,10 +112,10 @@ const rooms = [
     id: 'ensayo',
     name: 'Sala de Ensayo',
     tagline: 'Espacio para crear',
-    description: 'Un espacio ideal para actividades artístico - cultural, como baile, canto, obras de teatro, exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
+    description: 'Un espacio ideal para actividades artísticas-culturales, como baile, canto,obras de teatro, exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
     icon: 'music',
     capacity: 'Entre 30 - 40 personas', // TODO: confirmar capacidad real con la dueña
-    hours: 'Disponible con reserva previa',
+    hours: 'Disponible con reservación previa',
     features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaEnsayoGalleryImages,
     accent: 'rgb(216,182,148)',
@@ -168,7 +172,7 @@ function buildMainHTML() {
       <div class="absolute left-0 top-0 right-0 bottom-0 z-[1]" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 28%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 58%);"></div>
       <img src="img/fondo.png" alt="CAFÉ DEL BUENO — interior del local en Punta Arenas" class="block size-full max-w-full object-cover overflow-clip absolute left-0 top-0 right-0 bottom-0 aspect-[auto_1200_/_600]" />
       <div class="relative pt-14 pr-5 pb-14 pl-5 md:pt-20 md:pr-[30px] md:pb-20 md:pl-[30px] z-[2]">
-        <div class="text-left max-w-[460px]">
+        <div class="text-left" style="max-width: 460px;">
           <h1 class="font-bold text-left uppercase text-[30px] leading-[34px] md:text-[38px] md:leading-[42px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">El arte del café,<br />servido con calidez.</h1>
           <div class="text-left">
             <p class="text-left mt-[16px] md:mt-[20px] text-[16px] md:text-[18px] leading-[24px] md:leading-[26px] max-w-[420px]" style="text-shadow: rgb(0,0,0) 0px 0px 15px;">En Café del Bueno creemos que un buen café tiene el poder de transformar un momento cotidiano en una experiencia memorable. Te invitamos a disfrutar de café de especialidad, sabores cuidadosamente seleccionados y un ambiente pensado para hacerte sentir como en casa. Bienvenido a tu nuevo lugar favorito.</p>
@@ -198,8 +202,8 @@ function buildMainHTML() {
             Descargar Menú Completo (PDF)
           </a>
         </div>
-        <div class="max-w-[480px] ml-auto mr-auto shadow-lg" style="border-radius: 4px; overflow: hidden;">
-          ${buildPhotoLoopHtml('menu-photo-loop', menuGalleryImages, 'Preparaciones de CAFÉ DEL BUENO', 'contain')}
+        <div class="ml-auto mr-auto shadow-lg" style="border-radius: 4px; overflow: hidden; max-width: 360px;">
+          ${buildPhotoLoopHtml('menu-photo-loop', menuGalleryImages, 'Preparaciones de CAFÉ DEL BUENO', 'contain', 'auto')}
         </div>
       </div>
     </section>
@@ -248,7 +252,7 @@ function buildMainHTML() {
         <div class="text-center mb-14">
           <p class="uppercase text-[rgb(194,151,106)] text-[13px] tracking-[2px] mb-3" style="font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Espacio Privado</p>
           <h2 class="text-white text-[36px] mb-4" style="font-family: 'Cormorant Garamond', georgia, serif; font-weight: 700; line-height: 44px;">Reservar una Sala</h2>
-          <p class="text-[rgb(194,151,106)] max-w-[540px] mx-auto leading-body text-[18px]">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
+          <p class="text-[rgb(194,151,106)] mx-auto leading-body text-[18px]" style="max-width: 540px;">Un espacio versátil para vivir el café de otra manera, rodeado de personas que comparten tus ideas. Escríbenos por WhatsApp y te contamos la disponibilidad al instante.</p>
         </div>
         <div>
           ${roomsHtml}
@@ -409,11 +413,31 @@ function buildMainHTML() {
 function initPhotoLoops() {
   document.querySelectorAll('.photo-loop').forEach(container => {
     const imgs = container.querySelectorAll('.photo-loop-img');
+    if (imgs.length === 0) return;
+
+    const isAuto = container.classList.contains('photo-loop--auto');
+
+    // Si el cuadro es de proporción automática, mide la foto real (ancho x alto)
+    // y ajusta el cuadro a esa forma exacta, para que no quede espacio vacío
+    function matchRatioTo(img) {
+      if (!isAuto) return;
+      const apply = () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          container.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+        }
+      };
+      if (img.complete) apply();
+      else img.addEventListener('load', apply, { once: true });
+    }
+
+    matchRatioTo(imgs[0]);
+
     if (imgs.length <= 1) return;
     let current = 0;
     setInterval(() => {
       imgs[current].classList.remove('active');
       current = (current + 1) % imgs.length;
+      matchRatioTo(imgs[current]);
       imgs[current].classList.add('active');
     }, 4000);
   });
