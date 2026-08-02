@@ -163,6 +163,9 @@ html {
 }
 
 /* Cuadros de fotos en loop (Nosotros, Sala de Lectura y Reservar Sala) */
+.leading-body {
+  line-height: 28px;
+}
 .photo-loop-img {
   position: absolute;
   inset: 0;
@@ -174,6 +177,10 @@ html {
 }
 .photo-loop-img.active {
   opacity: 1;
+}
+.photo-loop-img--contain {
+  object-fit: contain;
+  background-color: rgb(240, 232, 220);
 }
 
 /* Botones de descarga del menú y de WhatsApp */
