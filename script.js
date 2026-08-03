@@ -103,7 +103,7 @@ const rooms = [
     description: 'Un espacio ideal para reuniones, cumpleaños, baby shower, talleres, etc. Con la comodidad de un buen café.',
     icon: 'users',
     capacity: 'Hasta 15 personas', // TODO: confirmar capacidad real con la dueña
-    hours: 'Disponible con reservación previa',
+    hours: 'Disponible con reserva previa',
     features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaReunionesGalleryImages,
     accent: 'rgb(216,182,148)',
@@ -112,11 +112,11 @@ const rooms = [
     id: 'ensayo',
     name: 'Sala de Ensayo',
     tagline: 'Espacio para crear',
-    description: 'Un espacio ideal para actividades artísticas-culturales, como baile, canto,obras de teatro, exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
+    description: 'Un espacio ideal para actividades artístico-cultural, como baile, canto,obras de teatro, exposiciones, talleres, etc. Contáctanos y coordinamos tu horario.',
     icon: 'music',
     capacity: 'Entre 30 - 40 personas', // TODO: confirmar capacidad real con la dueña
-    hours: 'Disponible con reservación previa',
-    features: ['Sólo con reservación', 'Servicio de café incluido', 'Configuración flexible'],
+    hours: 'Disponible con reserva previa',
+    features: ['Sólo con reserva', 'Servicio de café incluido', 'Configuración flexible'],
     gallery: salaEnsayoGalleryImages,
     accent: 'rgb(216,182,148)',
   },
